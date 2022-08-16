@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../AgentsWorldSystem/.idea/AgentsWorldSystem.iml" filepath="$PROJECT_DIR$/../AgentsWorldSystem/.idea/AgentsWorldSystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ComplexIntelligenceSystem/.idea/ComplexIntelligenceSystem.iml" filepath="$PROJECT_DIR$/../ComplexIntelligenceSystem/.idea/ComplexIntelligenceSystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ElementalConceptionSystem/.idea/ElementalConceptionSystem.iml" filepath="$PROJECT_DIR$/../ElementalConceptionSystem/.idea/ElementalConceptionSystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/EntelechySystem.iml" filepath="$PROJECT_DIR$/.idea/EntelechySystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../LifeManagementSystem/.idea/LifeManagementSystem.iml" filepath="$PROJECT_DIR$/../LifeManagementSystem/.idea/LifeManagementSystem.iml" />
+    </modules>
+  </component>
+</project>
