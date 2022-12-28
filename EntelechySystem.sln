@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntelechySystem_MAUI", "EntelechySystem_MAUI\EntelechySystem_MAUI.csproj", "{E2A3298B-ED3C-4DAA-A4D1-ADB5FEA481DC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexIntelligenceSystem_MAUI", "..\ComplexIntelligenceSystem\ComplexIntelligenceSystem_MAUI\ComplexIntelligenceSystem_MAUI.csproj", "{C3DE7D32-2FBA-40EB-8AB3-58A256109671}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{E2A3298B-ED3C-4DAA-A4D1-ADB5FEA481DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2A3298B-ED3C-4DAA-A4D1-ADB5FEA481DC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2A3298B-ED3C-4DAA-A4D1-ADB5FEA481DC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C3DE7D32-2FBA-40EB-8AB3-58A256109671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3DE7D32-2FBA-40EB-8AB3-58A256109671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3DE7D32-2FBA-40EB-8AB3-58A256109671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3DE7D32-2FBA-40EB-8AB3-58A256109671}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
