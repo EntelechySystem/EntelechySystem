@@ -4,7 +4,9 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../AgentsWorldSystem" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../ComplexIntelligenceSystem" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../ComplexIntelligenceSystem/ComplexIntelligenceSystem_jl" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../ElementalConceptionSystem" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../EntelechyEngine" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../LifeManagementSystem" vcs="Git" />
   </component>
 </project>

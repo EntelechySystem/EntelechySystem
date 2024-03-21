@@ -4,10 +4,12 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
+    <orderEntry type="jdk" jdkName="Python 3.12 (EntelechySystem)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="ComplexIntelligenceSystem" />
     <orderEntry type="module" module-name="ElementalConceptionSystem" />
     <orderEntry type="module" module-name="LifeManagementSystem" />
     <orderEntry type="module" module-name="AgentsWorldSystem" />
+    <orderEntry type="module" module-name="EntelechyEngine" />
   </component>
 </module>
