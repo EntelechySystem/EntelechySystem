@@ -1,3 +1,3 @@
-from engine.core.define_engineGlobalVariables import globals
+from engine.core.define_engineGlobalVariables import gb
 
-globals['folderpath_import_modules'] = __path__  # 导入模块文件夹路径
+gb['folderpath_import_modules'] = __path__  # 导入模块文件夹路径

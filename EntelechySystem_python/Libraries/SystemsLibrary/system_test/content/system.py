@@ -11,10 +11,10 @@ from ComplexIntelligenceSystem_python.Core.settings import Settings
 import logging
 
 
-def system(para: dict, globals: dict):
+def system(para: dict, gb: dict):
 
     ## #NOW 导入智能体模型
-
+    model = Model(gb)
 
     ## #NOW 导入临时的简单的世界环境
 
