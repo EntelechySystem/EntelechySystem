@@ -11,22 +11,21 @@ from ComplexIntelligenceSystem_python.Core.settings import Settings
 import logging
 
 
-def system(para: dict, gb: dict):
 
+def system(para: dict, gb: dict):
     ## #NOW 导入智能体模型
     model = Model(gb)
 
     ## #NOW 导入临时的简单的世界环境
 
-
-
     ## #NOW 导入临时的简单的先验知识
 
-
     ## #NOW 开始交互式学习
-    while True:
+    gb['is_interactive_learning'] = True
+    times_to_interactive = 10
+    while times_to_interactive > 0:
+        times_to_interactive -= 1
         pass  # while
-
 
     pass  # function
 
