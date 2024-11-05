@@ -10,7 +10,7 @@ from engine.tools.Tools import Tools
 def main():
 
     # 导入配置文件，从 Excel 文件
-    config = DataManageTools.load_configs_from_excel_file_then_save_as_python_file(Path(folderpath_config), is_save_to_pyfile=True)
+    config = DataManageTools.load_configs_from_excel_file_then_save_as_python_file(Path(folderpath_config))
     # config = DataManageTools.load_configs_from_excel_to_dict(Path(r'.'), True)
 
     # 保存为 PKL 文件
