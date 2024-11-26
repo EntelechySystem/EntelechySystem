@@ -1,7 +1,7 @@
 import sys
 
 config = dict(
-    神经元总数量=8,  # 数据类型：整数；配置类别：模型；备注：初始数量。默认 1'000'000。 ；
+    神经元总数量=256,  # 数据类型：整数；配置类别：模型；备注：初始数量。默认 1'000'000。 ；
     运作单元总数量=64,  # 数据类型：整数；配置类别：模型；备注：初始数量。默认 10'000。 ；
     单个神经元最大连接数=8,  # 数据类型：整数；配置类别：模型；备注：初始数量。默认 1'000。 ；
     单个运作单元最大连接数=8,  # 数据类型：整数；配置类别：模型；备注：初始数量。默认 1'000。 ；
@@ -32,7 +32,7 @@ config = dict(
     folderpath_relpath_ECS='../',  # 数据类型：路径字符串；配置类别：路径；备注：ECS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；
     folderpath_world_conception_knowledge='ElementalConceptionSystem/ElementalConceptionSystem_python/Libararies/ConceptionLibrary/conception_test',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
     folderpath_relpath_AWS='../',  # 数据类型：路径字符串；配置类别：路径；备注：AWS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；
-    folderpath_world_environment='AgentsWorldSystem/AgentsWorldSystem_python/Libraries/WorldLibrary/world_environment_test',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
+    folderpath_world_environment='AgentsWorldSystem/AgentsWorldSystem_python/Libraries/WorldLibrary/Virtual2DMiniNurseryEnv',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
     folderpath_agents='AgentsWorldSystem/AgentsWorldSystem_python/Libraries/AgentsLibrary/agents_test',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
     folderpath_relpath_LMS='../',  # 数据类型：路径字符串；配置类别：路径；备注：LMS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；
     foldername_outputData='EntelechyData',  # 数据类型：路径字符串；配置类别：路径；备注：输出数据所在工程文件夹名称 ；
@@ -46,8 +46,11 @@ config = dict(
     schedule_operation='ref_schedule_operation',  # 数据类型：引用；配置类别：运行；备注：调度需要运作的程序； ；
     运行模式='交互式观察运行模式',  # 数据类型：字符串；配置类别：初始化模型；备注：运行模式。可选参数值为："批量实验作业运行模式", "交互式观察运行模式" ； ；
     program_预加载相关的实验和库文件程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「预加载相关的实验和库文件程序」； ；
+    # program_预加载相关的实验和库文件程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「预加载相关的实验和库文件程序」； ；
+    # program_实验组模拟程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「实验组模拟程序」； ；
     program_实验组模拟程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「实验组模拟程序」； ；
     program_可视化结果程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「可视化结果程序」； ；
+    # program_可视化结果程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「可视化结果程序」； ；
     is_rerun_all_done_works_in_the_same_experiments=True,  # 数据类型：布尔值；配置类别：配置；备注：是否重新运行所有已经完成的实验。默认 False。如果为 True，则在实验运行之前，重置该实验组当中所有的实验作业运行状态为 "RAW"。 ；
     list_idsExperiment_to_run=[1],  # 数据类型：代码段；配置类别：实验；备注：设置要运行的实验编号列表。默认 None，表示运行所有实验。 ；
     is_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：是否处于开发模型状态。默认 False。默认情况下，模拟器通在子进程独立启用相关的程序。启用之后，在模拟器中，将通过函数调用的方式调用各个程序。启用之后，适合在 Python 3.11 开始的版本做断点调试。 ；
