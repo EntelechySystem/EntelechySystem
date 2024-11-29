@@ -16,7 +16,7 @@ from engine.libraries.world_environment.world_environment import Scenario, World
 
 
 def system(para: dict, gb: dict):
-    ## #NOW 导入智能体模型
+    ## #NOW 导入智能体大脑模型
     model = Model(gb)
 
     ## #NOW 导入临时的简单的世界环境
@@ -32,9 +32,20 @@ def system(para: dict, gb: dict):
     ### 初始化状态下，直接先预置一些概念
     folderpath_conceptions_data = Path(gb['folderpath_data'] / 'conceptions')
     df_基础概念_现代汉语字符库 = pd.read_pickle(folderpath_conceptions_data / '基础概念_现代汉语字符库.pkl')
+    ### 导入先验知识
+    # 预先导入基础类别为【数字集】、【英文标点符号和字符集】、【中文字符集】，以及【汉字集】里的常用字
+    df_基础概念_现代汉语字符库_常用字 = df_基础概念_现代汉语字符库[df_基础概念_现代汉语字符库['是否常用字'] == '是']
+
+    ## 预置先验知识到智能体大脑模型
+    # model.op_units_Conception.
+
+
+
 
     ## #NOW 开始交互式学习
     gb['is_interactive_learning'] = True
+
+
     # times_to_interactive = 10
     # while times_to_interactive > 0:
     #     times_to_interactive -= 1
