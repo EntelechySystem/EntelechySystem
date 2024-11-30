@@ -37,7 +37,10 @@ def system(para: dict, gb: dict):
     df_基础概念_现代汉语字符库_常用字 = df_基础概念_现代汉语字符库[df_基础概念_现代汉语字符库['是否常用字'] == '是']
 
     ## 预置先验知识到智能体大脑模型
-    # model.op_units_Conception.
+    ids=range(0,len(df_基础概念_现代汉语字符库_常用字))
+    model.op_units_Conception.content[ids] = np.vectorize(lambda char: char.encode('utf-8'))(df_基础概念_现代汉语字符库_常用字['内容_010'])
+    model.op_units_Conception.state_on[ids] = True
+
 
 
 
