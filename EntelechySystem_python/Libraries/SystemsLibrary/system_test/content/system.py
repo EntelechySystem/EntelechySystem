@@ -30,7 +30,7 @@ def system(para: dict, gb: dict):
     # observations, infos = my_env.reset()
     env.reset()
 
-    ## #NOW 导入临时的简单的先验知识
+    ## 导入临时的简单的先验知识
     ### 初始化状态下，直接先预置一些概念
     folderpath_conceptions_data = Path(gb['folderpath_data'] / 'conceptions')
     df_基础概念_现代汉语字符库 = pd.read_pickle(folderpath_conceptions_data / '基础概念_现代汉语字符库.pkl')
@@ -38,12 +38,16 @@ def system(para: dict, gb: dict):
     # 预先导入基础类别为【数字集】、【英文标点符号和字符集】、【中文字符集】，以及【汉字集】里的常用字
     df_基础概念_现代汉语字符库_常用字 = df_基础概念_现代汉语字符库[df_基础概念_现代汉语字符库['是否常用字'] == '是']
 
-    ## 预置先验知识到智能体大脑模型
+
+    logging.info("初始化智能体模型")
+
+    ## #NOW 预置先验知识到智能体大脑模型
     ids = range(0, len(df_基础概念_现代汉语字符库_常用字))
     m.op_units_Conception.content[ids] = np.vectorize(lambda char: char.encode('utf-8'))(df_基础概念_现代汉语字符库_常用字['内容_010'])
     m.op_units_Conception.state_on[ids] = True
 
-    ## #NOW 开始交互式学习
+
+    ## #TODO 开始交互式学习
     gb['is_interactive_learning'] = True
 
     # times_to_interactive = 10
@@ -57,7 +61,7 @@ def system(para: dict, gb: dict):
 
         # 手动采样
         actions = {}
-        for agent in env.agents:
+        for a in env.agents:
             action_说话 = "你好，世界！"
             action_说话_encode = Tools.encode_unicode_to_array(action_说话)
             action = {
@@ -70,7 +74,7 @@ def system(para: dict, gb: dict):
                 '睡眠': np.int64(0),
                 '饮食': np.int64(0),
             }
-            actions[agent] = action
+            actions[a] = action
             pass  # for
 
         # #DEBUG
