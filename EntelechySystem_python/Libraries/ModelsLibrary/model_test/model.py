@@ -4,9 +4,9 @@
 
 from engine.externals import np
 # from ComplexIntelligenceSystem.Core.define_units import define_neurons_units, define_op_units
-from ComplexIntelligenceSystem.Core.define_units import NeuronsUnits, NeuronsUnits_ForHumanRead, OperationUnits
-from ComplexIntelligenceSystem.Core.tools import Tools
-from ComplexIntelligenceSystem.Core.settings import Settings
+from engine.functions.ComplexIntelligenceSystem.Core.define_units import NeuronsUnits, NeuronsUnits_ForHumanRead, OperationUnits
+from engine.functions.ComplexIntelligenceSystem.Core.tools import Tools
+from engine.functions.ComplexIntelligenceSystem.Core.settings import Settings
 import logging
 
 
