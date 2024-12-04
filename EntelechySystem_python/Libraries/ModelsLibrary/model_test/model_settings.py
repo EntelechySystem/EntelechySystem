@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Settings():
+class ModelSettings():
     """
     模型通用设置
 

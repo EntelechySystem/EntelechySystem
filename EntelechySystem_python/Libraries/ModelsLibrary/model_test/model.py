@@ -2,12 +2,12 @@
 模型
 """
 
-from engine.externals import np
-# from ComplexIntelligenceSystem.Core.define_units import define_neurons_units, define_op_units
-from engine.functions.ComplexIntelligenceSystem.Core.define_units import NeuronsUnits, NeuronsUnits_ForHumanRead, OperationUnits
+from engine.externals import np, logging
+# from model_define import NeuronsUnits, NeuronsUnits_ForHumanRead, OperationUnits
+# from engine.libraries.models.model_define import ModelDefine
 from engine.functions.ComplexIntelligenceSystem.Core.tools import Tools
-from engine.functions.ComplexIntelligenceSystem.Core.settings import Settings
-import logging
+from .model_define import ModelDefine
+from .model_settings import ModelSettings
 
 
 class Model:
@@ -49,10 +49,10 @@ class Model:
         ## 初始化单元众
 
         ### 定义神经元
-        self.ne_units = NeuronsUnits(self.N_ne_units, gb['单个神经元连接预留位总数量'])
+        self.ne_units = ModelDefine.NeuronsUnits(self.N_ne_units, gb['单个神经元连接预留位总数量'])
 
         ### 定义用于人类阅读的神经元数据
-        self.ne_units_human = NeuronsUnits_ForHumanRead(self.N_ne_units, gb['单个神经元连接预留位总数量'])
+        self.ne_units_human = ModelDefine.NeuronsUnits_ForHumanRead(self.N_ne_units, gb['单个神经元连接预留位总数量'])
 
         # 打印初始化的神经元
         logging.info("初始化的神经元")
@@ -62,10 +62,10 @@ class Model:
         gb['起始gid'] = 0
 
         ### 初始化控制运作单元
-        self.op_units_Control = OperationUnits(
+        self.op_units_Control = ModelDefine.OperationUnits(
             self.N_op_units_Control,
             gb['单个运作单元连接预留位总数量'],
-            Settings.dict_written_type_of_Units['control'],
+            ModelSettings.dict_written_type_of_Units['control'],
             gb['起始gid']
         )
         logging.info("初始化的控制运作单元")
@@ -73,19 +73,19 @@ class Model:
 
         ### 初始化容器运作单元
         gb['起始gid'] += self.N_op_units_Control
-        self.op_units_Container = OperationUnits(
+        self.op_units_Container = ModelDefine.OperationUnits(
             self.N_op_units_Container,
             gb['单个运作单元连接预留位总数量'],
-            Settings.dict_written_type_of_Units['container'],
+            ModelSettings.dict_written_type_of_Units['container'],
             gb['起始gid']
         )
 
         ### 初始化目标运作单元
         gb['起始gid'] += self.N_op_units_Container
-        self.op_units_Goal = OperationUnits(
+        self.op_units_Goal = ModelDefine.OperationUnits(
             self.N_op_units_Goal,
             gb['单个运作单元连接预留位总数量'],
-            Settings.dict_written_type_of_Units['goal'],
+            ModelSettings.dict_written_type_of_Units['goal'],
             gb['起始gid']
         )
         logging.info("初始化的容器运作单元")
@@ -93,10 +93,10 @@ class Model:
 
         ### 初始化任务运作单元
         gb['起始gid'] += self.N_op_units_Goal
-        self.op_units_Task = OperationUnits(
+        self.op_units_Task = ModelDefine.OperationUnits(
             self.N_op_units_Task,
             gb['单个运作单元连接预留位总数量'],
-            Settings.dict_written_type_of_Units['task'],
+            ModelSettings.dict_written_type_of_Units['task'],
             gb['起始gid']
         )
         logging.info("初始化的任务运作单元")
@@ -104,10 +104,10 @@ class Model:
 
         ### 初始化概念运作单元
         gb['起始gid'] += self.N_op_units_Task
-        self.op_units_Conception = OperationUnits(
+        self.op_units_Conception = ModelDefine.OperationUnits(
             self.N_op_units_Conception,
             gb['单个运作单元连接预留位总数量'],
-            Settings.dict_written_type_of_Units['conception'],
+            ModelSettings.dict_written_type_of_Units['conception'],
             gb['起始gid']
         )
         logging.info("初始化的概念运作单元")
