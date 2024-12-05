@@ -9,6 +9,9 @@ from engine.functions.ComplexIntelligenceSystem.Core.tools import Tools
 from .model_define import ModelDefine
 from .model_settings import ModelSettings
 
+import torch
+import jax.numpy as jnp
+
 
 class Model:
     ne_units = None
@@ -40,11 +43,12 @@ class Model:
 
         ### 定义神经元
         self.N_ne_units = gb['神经元预留位总数量']
-        self.N_op_units_Control = int(gb['运作单元预留位总数量'] / 8)
-        self.N_op_units_Container = int(gb['运作单元预留位总数量'] / 8)
-        self.N_op_units_Goal = int(gb['运作单元预留位总数量'] / 8)
-        self.N_op_units_Task = int(gb['运作单元预留位总数量'] / 8)
-        self.N_op_units_Conception = int(gb['运作单元预留位总数量'] / 2)
+        self.N_op_on= int(gb['运作单元预留位总数量'] / 2)
+        self.N_op_units_Control = int(self.N_op_on / 8)
+        self.N_op_units_Container = int(self.N_op_on / 8)
+        self.N_op_units_Goal = int(self.N_op_on / 8)
+        self.N_op_units_Task = int(self.N_op_on / 8)
+        self.N_op_units_Conception = int(self.N_op_on / 2)
 
         ## 初始化单元众
 
@@ -115,15 +119,61 @@ class Model:
 
         ## 初始化模型单元结构
 
+        # ## 初始化控制单元结构（基于 Numpy 版本）
+        #
+        # #### 总控制中心
+        #
+        # # 选取 64 个控制单元做为总控制中心（一级控制中心）。这些控制单元之间相互连接，形成一个全连接网络。
+        #
+        # N_units_controlCenter = 64  # 一级控制中心之控制单元数量
+        # ids_point = 0  # 用于记录当前要开始选取的 ID 偏移值
+        # ids_from = np.arange(N_units_controlCenter)
+        # ids_level1Center = ids_from.copy()
+        # self.op_units_Control.links_id(ids_from, ids_from)  # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
+        # ids_point += N_units_controlCenter
+        #
+        # #### 分级控制中心
+        #
+        # # 再选取 64 个控制单元做为2级控制中心。这些控制单元之间相互连接，形成一个全连接网络。二级控制中心
+        # N_controlUnits_level2Center = 64
+        # N_level2Center = 64
+        # for i in range(N_level2Center):
+        #     ids_from = np.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level2Center)
+        #     ids_level2Center = ids_from.copy()
+        #     ids_to = np.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level2Center)
+        #     self.op_units_Control.links_id(i, ids_from)
+        #     self.op_units_Control.links_id(ids_from, ids_to)
+        #     ids_to = ids_level1Center
+        #     self.op_units_Control.links_id(ids_from, ids_to)  # 同一级的控制中心之间暂时不连接，但是与上级控制中心连接
+        #     ids_point += N_controlUnits_level2Center
+        #
+        #     # 选取 64 个控制单元做为3级控制中心。这些控制单元之间相互连接，形成一个全连接网络。三级控制中心
+        #     N_controlUnits_level3Center = 64
+        #     N_level3Center = 64
+        #     for i in range(N_level3Center):
+        #         ids_from = np.arange(ids_point, ids_point + N_controlUnits_level3Center)
+        #         ids_to = np.arange(ids_point, ids_point + N_controlUnits_level3Center)
+        #         self.op_units_Control.links_id(ids_from, ids_to)  # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
+        #         ids_to = ids_level2Center
+        #         self.op_units_Control.links_id(ids_from, ids_to)  # 同一级的控制中心之间暂时不连接，但是与上级控制中心连接
+        #         ids_point += N_controlUnits_level3Center
+        #
+
+        ### 初始化控制单元结构（基于 PyTorch 版本）
+
         #### 总控制中心
 
         # 选取 64 个控制单元做为总控制中心（一级控制中心）。这些控制单元之间相互连接，形成一个全连接网络。
 
         N_units_controlCenter = 64  # 一级控制中心之控制单元数量
         ids_point = 0  # 用于记录当前要开始选取的 ID 偏移值
-        ids_from = np.arange(N_units_controlCenter)
-        ids_level1Center = ids_from.copy()
-        self.op_units_Control.links_id(ids_from, ids_from)  # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
+        ids_from = torch.arange(N_units_controlCenter)
+        ids_to = ids_from.clone()
+        ids_level1Center = ids_from.clone()
+        indices = torch.cartesian_prod(ids_from, ids_to).t()
+        values = torch.ones(indices.shape[1], dtype=torch.int32)
+        self.op_units_Control.links_id = torch.sparse_coo_tensor(indices, values, size=self.op_units_Control.links_id.shape)  # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
+        # self.op_units_Control.links_id(ids_from, ids_from)
         ids_point += N_units_controlCenter
 
         #### 分级控制中心
