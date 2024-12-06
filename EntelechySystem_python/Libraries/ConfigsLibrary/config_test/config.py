@@ -5,6 +5,9 @@ config = dict(
     运作单元预留位总数量=2 ** 16,  # 数据类型：整数；配置类别：模型；备注：初始数量。默认 10'000。 ；
     单个神经元连接预留位总数量=2 ** 8,  # 数据类型：整数；配置类别：模型；备注：初始数量。默认 1'000。 ；
     单个运作单元连接预留位总数量=2 ** 8,  # 数据类型：整数；配置类别：模型；备注：初始数量。默认 1'000。 ；
+    字符容量=2 ** 8,  # 数据类型：整数；配置类别：模型；备注：字符容量。默认 256。 ；
+    用于解释的字符容量=2 ** 16,  # 数据类型：整数；配置类别：模型；备注：用于解释的字符容量。默认 65'536。 ；
+    用于备注的字符容量=2 ** 16,  # 数据类型：整数；配置类别：模型；备注：用于备注的字符容量。默认 65'536。 ；
     is_use_xlsx_as_config_file=True,  # 数据类型：布尔值；配置类别：配置；备注：是否使用 xlsx 表格文件作为各种配置的默认选项。默认 False 。如果是 True，则采用名为 `XXX_dict.py` 的文件作为各种配置的默认选项。其中 XXX 表示配置项、设置项等； ；
     is_prerun_config_program=False,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行配置库相关的生成配置程序。默认 True。如果要用 False，那么不能用 Python 控制台运行，只能在终端用命令行运行。否则运行的时候不会继续推进。 ；
     is_prerun_agents_program=True,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行个体众库相关的生成参数的程序。默认 True； ；
@@ -27,7 +30,7 @@ config = dict(
     folderpath_config='EntelechySystem_python/Libraries/ConfigsLibrary/config_test',  # 数据类型：路径字符串；配置类别：路径；备注：配置项设置所在的文件夹 ；
     folderpath_parameters='EntelechySystem_python/Libraries/ParametersLibrary/parameters_test',  # 数据类型：路径字符串；配置类别：路径；备注：参数设置所在的文件夹 ；
     # folderpath_relpath_CIS='../',  # 数据类型：路径字符串；配置类别：路径；备注：CIS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
-    folderpath_models='EntelechySystem_python/Libraries/ModelsLibrary/model_test',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
+    folderpath_models='EntelechySystem_python/Libraries/ModelsLibrary/model_111_pytorch',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
     folderpath_settings='EntelechySystem_python/Libraries/SettingsLibrary/settings_test',  # 数据类型：路径字符串；配置类别：路径；备注：设置项所在的文件夹 ；
     # folderpath_relpath_ECS='../',  # 数据类型：路径字符串；配置类别：路径；备注：ECS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
     folderpath_world_conception_knowledge='EntelechySystem_python/Libararies/ConceptionLibrary/conception_test',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
@@ -45,12 +48,12 @@ config = dict(
     type_of_experiments_foldername='default',  # 数据类型：字符串；配置类别：命名；备注：设置实验文件夹命名方式。取值："default"、"set manually"。默认"default"； ；
     schedule_operation='ref_schedule_operation',  # 数据类型：引用；配置类别：运行；备注：调度需要运作的程序； ；
     运行模式='交互式观察运行模式',  # 数据类型：字符串；配置类别：初始化模型；备注：运行模式。可选参数值为："批量实验作业运行模式", "交互式观察运行模式" ； ；
-    is_maintain_files_in_simulator_when_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
-    # is_maintain_files_in_simulator_when_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
-    # program_预加载相关的实验和库文件程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「预加载相关的实验和库文件程序」； ；
-    program_预加载相关的实验和库文件程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「预加载相关的实验和库文件程序」； ；
-    program_实验组模拟程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「实验组模拟程序」； ；
-    # program_实验组模拟程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「实验组模拟程序」； ；
+    # is_maintain_files_in_simulator_when_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
+    is_maintain_files_in_simulator_when_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
+    program_预加载相关的实验和库文件程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「预加载相关的实验和库文件程序」； ；
+    # program_预加载相关的实验和库文件程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「预加载相关的实验和库文件程序」； ；
+    # program_实验组模拟程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「实验组模拟程序」； ；
+    program_实验组模拟程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「实验组模拟程序」； ；
     # program_可视化结果程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「可视化结果程序」； ；
     program_可视化结果程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「可视化结果程序」； ；
     is_rerun_all_done_works_in_the_same_experiments=True,  # 数据类型：布尔值；配置类别：配置；备注：是否重新运行所有已经完成的实验。默认 False。如果为 True，则在实验运行之前，重置该实验组当中所有的实验作业运行状态为 "RAW"。 ；
