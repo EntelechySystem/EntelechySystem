@@ -130,10 +130,11 @@ class Model:
 
         ### 初始化控制单元结构（基于 PyTorch 版本）
 
-        #### 总控制中心
+        import torch
 
-        # 选取 64 个控制单元做为总控制中心（一级控制中心）。这些控制单元之间相互连接，形成一个全连接网络。
+        # 初始化控制单元结构（基于 PyTorch 版本）
 
+        # 总控制中心
         N_units_controlCenter = 64  # 一级控制中心之控制单元数量
         ids_point = 0  # 用于记录当前要开始选取的 ID 偏移值
         ids_from = torch.arange(N_units_controlCenter)
@@ -141,35 +142,57 @@ class Model:
         ids_level1Center = ids_from.clone()
         indices = torch.cartesian_prod(ids_from, ids_to).t()
         values = torch.ones(indices.shape[1], dtype=torch.int32)
-        self.op_units_Control.links_id = torch.sparse_coo_tensor(indices, values, size=(N_units_controlCenter, N_units_controlCenter))  # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。 #FIXME
-        # self.op_units_Control.links_id(ids_from, ids_from)
-        ids_point += N_units_controlCenter
+        self.op_units_Control.links_id = torch.sparse_coo_tensor(indices, values, size=(self.N_op_units_Control, self.N_op_units_Control))
 
-        #### 分级控制中心
-
-        # 再选取 64 个控制单元做为2级控制中心。这些控制单元之间相互连接，形成一个全连接网络。二级控制中心
+        # 二级控制中心
         N_controlUnits_level2Center = 64
         N_level2Center = 64
         for i in range(N_level2Center):
-            ids_from = np.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level2Center)
-            ids_level2Center = ids_from.copy()
-            ids_to = np.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level2Center)
-            self.op_units_Control.links_id(i, ids_from)
-            self.op_units_Control.links_id(ids_from, ids_to)
-            ids_to = ids_level1Center
-            self.op_units_Control.links_id(ids_from, ids_to)  # 同一级的控制中心之间暂时不连接，但是与上级控制中心连接
-            ids_point += N_controlUnits_level2Center
 
-            # 选取 64 个控制单元做为3级控制中心。这些控制单元之间相互连接，形成一个全连接网络。三级控制中心
+            # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
+            ids_from = torch.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level2Center)
+            ids_level2Center = ids_from.clone()
+            ids_to = ids_from.clone()
+            indices = torch.cartesian_prod(ids_from, ids_to).t()
+            values = torch.ones(indices.shape[1], dtype=torch.int32)
+            links_id = torch.sparse_coo_tensor(indices, values, size=(self.N_op_units_Control, self.N_op_units_Control))
+            self.op_units_Control.links_id += links_id
+
+            # 同一级的控制中心之间暂时不连接，但是与上级控制中心连接
+            ids_from = ids_level2Center[0]
+            ids_to = ids_level1Center[0]
+            indices = torch.tensor([[ids_from], [ids_to]])
+            values = torch.ones(1, dtype=torch.int32)
+            links_id = torch.sparse_coo_tensor(indices, values, size=(self.N_op_units_Control, self.N_op_units_Control))
+            self.op_units_Control.links_id += links_id
+
+            # 三级控制中心
             N_controlUnits_level3Center = 64
             N_level3Center = 64
-            for i in range(N_level3Center):
-                ids_from = np.arange(ids_point, ids_point + N_controlUnits_level3Center)
-                ids_to = np.arange(ids_point, ids_point + N_controlUnits_level3Center)
-                self.op_units_Control.links_id(ids_from, ids_to)  # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
-                ids_to = ids_level2Center
-                self.op_units_Control.links_id(ids_from, ids_to)  # 同一级的控制中心之间暂时不连接，但是与上级控制中心连接
-                ids_point += N_controlUnits_level3Center
+            for j in range(N_level3Center):
+                # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
+                ids_from = torch.arange(ids_point, ids_point + N_controlUnits_level3Center)
+                ids_level3Center = ids_from.clone()
+                ids_to = ids_from.clone()
+                indices = torch.cartesian_prod(ids_from, ids_to).t()
+                values = torch.ones(indices.shape[1], dtype=torch.int32)
+                links_id = torch.sparse_coo_tensor(indices, values, size=(self.N_op_units_Control, self.N_op_units_Control))
+                self.op_units_Control.links_id += links_id
+
+                # 同一级的控制中心之间暂时不连接，但是与上级控制中心连接
+                ids_from = ids_level3Center[0]
+                ids_to = ids_level2Center[0]
+                indices = torch.tensor([[ids_from], [ids_to]])
+                values = torch.ones(1, dtype=torch.int32)
+                links_id = torch.sparse_coo_tensor(indices, values, size=(self.N_op_units_Control, self.N_op_units_Control))
+                self.op_units_Control.links_id += links_id
+
+                # #NOW 每一个三级控制中心之每一个控制单元都连接一个概念单元
+                ids_from = ids_level3Center[0]
+                ids_to = torch.arange(self.N_op_units_Control, self.N_op_units_Control + self.N_op_units_Conception)
+
+                pass  # for j
+            pass  # for i
 
         pass  # function
 

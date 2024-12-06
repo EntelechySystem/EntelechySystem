@@ -25,17 +25,20 @@ class ModelDefine():
         """
 
         def __init__(self, N_units: int, max_N_links: int):
-            self.gid = torch.arange(N_units, dtype=jnp.int64)  # 单元之全局 ID（N）
-            self.uid = torch.arange(N_units, dtype=jnp.int64)  # 单元之 ID（N）
-            self.pos_x = torch.zeros(N_units, dtype=jnp.float64)  # 单元之物理空间之 X 坐标
-            self.pos_y = torch.zeros(N_units, dtype=jnp.float64)  # 单元之物理空间之 Y 坐标
-            # self.pos_z = torch.zeros(N_units, dtype=jnp.float64)# 单元之物理空间之 Z 坐标 #NOTE 如果需要再启用
-            self.input_units = torch.empty((N_units), dtype=jnp.float32)  # 单元之输入
-            self.output_units = torch.empty((N_units), dtype=jnp.float32)  # 单元之输出
-            # self.contents_obj = torch.empty((N_units), dtype=jnp.string)  # 单元之内容
-            # self.containers_obj = torch.empty((N_units), dtype=jnp.string)  # 单元之容器
-            # self.nodes_obj = torch.empty((N_units), dtype=jnp.string)  # 单元之节点
-            self.links = torch.empty((N_units, max_N_links), dtype=jnp.int32)  # 单元之连接
+            self.gid = torch.arange(N_units, dtype=torch.int64)  # 单元之全局 ID（N）
+            self.uid = torch.arange(N_units, dtype=torch.int64)  # 单元之 ID（N）
+            self.pos_x = torch.zeros(N_units, dtype=torch.float64)  # 单元之物理空间之 X 坐标
+            self.pos_y = torch.zeros(N_units, dtype=torch.float64)  # 单元之物理空间之 Y 坐标
+            # self.pos_z = torch.zeros(N_units, dtype=torch.float64)# 单元之物理空间之 Z 坐标 #NOTE 如果需要再启用
+            self.input_units = torch.empty((N_units), dtype=torch.float32)  # 单元之输入
+            self.output_units = torch.empty((N_units), dtype=torch.float32)  # 单元之输出
+            # self.contents_obj = torch.empty((N_units), dtype=torch.string)  # 单元之内容
+            # self.containers_obj = torch.empty((N_units), dtype=torch.string)  # 单元之容器
+            # self.nodes_obj = torch.empty((N_units), dtype=torch.string)  # 单元之节点
+            self.links = torch.empty((N_units, max_N_links), dtype=torch.int32)  # 单元之连接
+            self.units_name = torch.array([Tools.generate_unique_identifier() for i in range(N_units)], np.dtype('S32'))
+            self.units_type = torch.array(np.full(N_units, ModelSettings.dict_written_type_of_Units['neuron']), dtype=torch.uint8)
+
             pass  # function
 
         pass  # class
@@ -56,9 +59,9 @@ class ModelDefine():
     #             N_units:
     #             max_num_links:
     #         """
-    #         self.gid = torch.arange(N_units, dtype=jnp.int64)
+    #         self.gid = torch.arange(N_units, dtype=torch.int64)
     #         self.units_name = torch.array([Tools.generate_unique_identifier() for i in range(N_units)], np.dtype('S32'))
-    #         self.units_type = torch.array(np.full(N_units, ModelSettings.dict_written_type_of_Units['neuron']), dtype=jnp.uint8)
+    #         self.units_type = torch.array(np.full(N_units, ModelSettings.dict_written_type_of_Units['neuron']), dtype=torch.uint8)
     #         pass  # function
     #
     #     pass  # class
