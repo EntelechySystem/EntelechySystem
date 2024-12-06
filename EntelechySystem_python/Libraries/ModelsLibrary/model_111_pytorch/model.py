@@ -52,28 +52,15 @@ class Model:
         ## 初始化单元众
 
         ### 定义神经元
-        self.ne_units = ModelDefine.NeuralNetUnit(self.N_ne_units, gb['单个神经元连接预留位总数量'])
-
-        ### 定义用于人类阅读的神经元数据
-        self.ne_units_human = ModelDefine.NeuralNetUnit_ForHumanRead(self.N_ne_units, gb['单个神经元连接预留位总数量'])
-
-        # 打印初始化的神经元
-        logging.info("初始化的神经元")
-        Tools.print_units_values(self.ne_units)
-        Tools.print_units_values(self.ne_units_human)
 
         gb['起始gid'] = 0
 
         ### 定义神经元
         self.ne_units = ModelDefine.NeuralNetUnit(self.N_ne_units, gb['单个神经元连接预留位总数量'])
 
-        ### 定义用于人类阅读的神经元数据
-        self.ne_units_human = ModelDefine.NeuralNetUnit_ForHumanRead(self.N_ne_units, gb['单个神经元连接预留位总数量'])
-
         # 打印初始化的神经元
         logging.info("初始化的神经元")
         Tools.print_units_values(self.ne_units)
-        Tools.print_units_values(self.ne_units_human)
 
         gb['起始gid'] = 0
 
