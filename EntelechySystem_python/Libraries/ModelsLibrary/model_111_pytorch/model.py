@@ -135,6 +135,8 @@ class Model:
         # 初始化控制单元结构（基于 PyTorch 版本）
 
         # 总控制中心
+
+        # 选取 64 个控制单元做为总控制中心（一级控制中心）。这些控制单元之间相互连接，形成一个全连接网络。
         N_units_controlCenter = 64  # 一级控制中心之控制单元数量
         ids_point = 0  # 用于记录当前要开始选取的 ID 偏移值
         ids_from = torch.arange(N_units_controlCenter)
@@ -144,6 +146,7 @@ class Model:
         values = torch.ones(indices.shape[1], dtype=torch.int32)
         self.op_units_Control.links_id = torch.sparse_coo_tensor(indices, values, size=(self.N_op_units_Control, self.N_op_units_Control))
 
+        # 分级控制中心
         # 二级控制中心
         N_controlUnits_level2Center = 64
         N_level2Center = 64

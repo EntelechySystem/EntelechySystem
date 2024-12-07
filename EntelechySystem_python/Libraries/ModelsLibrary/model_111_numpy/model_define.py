@@ -7,6 +7,7 @@ import numpy as np
 # from numba import njit
 
 import torch
+from scipy.sparse import coo_matrix, lil_matrix
 
 from engine.functions.ComplexIntelligenceSystem.Core.tools import Tools
 from .model_settings import ModelSettings
@@ -35,9 +36,9 @@ class ModelDefine():
             # self.contents_obj = torch.empty((N_units), dtype=torch.string)  # 单元之内容
             # self.containers_obj = torch.empty((N_units), dtype=torch.string)  # 单元之容器
             # self.nodes_obj = torch.empty((N_units), dtype=torch.string)  # 单元之节点
-            self.links = torch.empty((N_units, max_N_links), dtype=torch.int32)  # 单元之连接
-            self.units_name = torch.array([Tools.generate_unique_identifier() for i in range(N_units)], np.dtype('S32'))
-            self.units_type = torch.array(np.full(N_units, ModelSettings.dict_written_type_of_Units['neuron']), dtype=torch.uint8)
+            # self.links = torch.empty((N_units, max_N_links), dtype=torch.int32)  # 单元之连接
+            # self.units_name = torch.array([Tools.generate_unique_identifier() for i in range(N_units)], np.dtype('S32'))
+            # self.units_type = torch.array(np.full(N_units, ModelSettings.dict_written_type_of_Units['neuron']), dtype=torch.uint8)
 
             pass  # function
 
@@ -73,7 +74,6 @@ class ModelDefine():
 
         Numpy 版本  #NOTE 如果需要再启用
 
-        注意，连接的数据类型为 int32，因为连接的值可能为负数。值为 -1 表示未连接。
         """
 
         def __init__(self, N_units: np.uint64, max_N_links: np.uint64, unit_type: np.uint8, init_gid: np.uint64):
@@ -93,40 +93,43 @@ class ModelDefine():
             self.units_type = np.full(N_units, unit_type)  # 运作单元之类型
             self.input_units = np.full(N_units, ' ', np.dtype('S128'))  # 运作单元之输入
             self.output_units = np.full(N_units, ' ', np.dtype('S128'))  # 运作单元之输出
-            self.links_soft = -np.ones((N_units, max_N_links), np.dtype(np.int32))  # 运作单元之软连接（N×M）
-            self.links_id = -np.ones((N_units, max_N_links), np.dtype(np.int32))  # 运作单元之 id 硬连接（N×M）
+            # self.links_soft = -np.ones((N_units, max_N_links), np.dtype(np.int32))  # 运作单元之软连接（N×M）
+            # self.links_id = -np.ones((N_units, max_N_links), np.dtype(np.int32))  # 运作单元之 id 硬连接（N×M）
+            self.links_soft = coo_matrix((N_units, N_units), dtype=np.int32)  # 运作单元之软连接（N×M）
+            # self.links_id = coo_matrix((N_units, N_units), dtype=np.bool)  # 运作单元之 id 硬连接（N×M）
+            self.links_id = lil_matrix((N_units, N_units), dtype=np.bool)  # 运作单元之 id 硬连接（N×M）
             self.content = np.full(N_units, ' ', np.dtype('S128'))  # 运作单元之内容
-            self.explanation = np.full(N_units, ' ', np.dtype('S65536'))  # 运作单元之解释
-            self.notes = np.full(N_units, ' ', np.dtype('S65536'))  # 运作单元之备注
+            self.explanation = np.full(N_units, ' ', np.dtype('S4096'))  # 运作单元之解释
+            self.notes = np.full(N_units, ' ', np.dtype('S4096'))  # 运作单元之备注
 
             pass  # function
 
-    @dataclass()
-    class OperationUnitsForHuman():
-        """
-        定义可用于人类观察可读的运作单元（机器件）之结构化数组的数据
-
-        Numpy 版本  #NOTE 如果需要再启用
-
-        注意，连接的数据类型为 int32，因为连接的值可能为负数。值为 -1 表示未连接。
-        """
-
-        def __init__(self, N_units: np.uint32, max_N_links: np.uint32, unit_type: np.uint8, init_gid: np.uint32):
-            """
-            初始化可用于人类观察可读的运作单元（机器件）之结构化数组的数据
-
-            Args:
-                N_units: 运作单元容量
-                max_N_links: 运作单元之最大连接数
-                unit_type: 运作单元之类型
-                init_gid: 初始全局 ID 偏移值
-            """
-            self.gid = np.arange(init_gid, init_gid + N_units)  # 单元之全局 ID
-            self.explanation = np.full(N_units, ' ', np.dtype('S65536'))  # 运作单元之解释
-            self.notes = np.full(N_units, ' ', np.dtype('S65536'))  # 运作单元之备注
-            pass  # function
-
-        pass  # class
+    # @dataclass()
+    # class OperationUnitsForHuman():
+    #     """
+    #     定义可用于人类观察可读的运作单元（机器件）之结构化数组的数据
+    #
+    #     Numpy 版本  #NOTE 如果需要再启用
+    #
+    #     注意，连接的数据类型为 int32，因为连接的值可能为负数。值为 -1 表示未连接。
+    #     """
+    #
+    #     def __init__(self, N_units: np.uint32, max_N_links: np.uint32, unit_type: np.uint8, init_gid: np.uint32):
+    #         """
+    #         初始化可用于人类观察可读的运作单元（机器件）之结构化数组的数据
+    #
+    #         Args:
+    #             N_units: 运作单元容量
+    #             max_N_links: 运作单元之最大连接数
+    #             unit_type: 运作单元之类型
+    #             init_gid: 初始全局 ID 偏移值
+    #         """
+    #         self.gid = np.arange(init_gid, init_gid + N_units)  # 单元之全局 ID
+    #         self.explanation = np.full(N_units, ' ', np.dtype('S65536'))  # 运作单元之解释
+    #         self.notes = np.full(N_units, ' ', np.dtype('S65536'))  # 运作单元之备注
+    #         pass  # function
+    #
+    #     pass  # class
 
     @dataclass()
     class KeyData():
