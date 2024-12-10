@@ -41,7 +41,7 @@ class Model:
         ## 初始化单元众
 
         ### 定义神经元
-        self.N_ne_units = gb['神经元预留位总数量']
+        self.N_ne_units = int(gb['计算神经元预留位总数量'])
         self.N_op_on = int(gb['运作单元预留位总数量'] / 2)
         self.N_op_units_Control = int(self.N_op_on / 8)
         self.N_op_units_Container = int(self.N_op_on / 8)
