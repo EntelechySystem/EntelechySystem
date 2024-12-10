@@ -17,6 +17,20 @@ from dataclasses import dataclass
 @dataclass
 class ModelDefine():
     @dataclass
+    class OperationUnitEntities():
+        """
+        定义运作单元实体众之结构化数组的数据类型。
+        """
+
+        def __init__(self, N_units: int, max_N_links: int):
+            self.gid = np.arange(N_units, dtype=np.uint64)  # 单元之全局 ID
+            self.tid = np.zeros(N_units, dtype=np.uint64)  # 单元之类型 ID
+            self.uid = np.zeros(N_units, dtype=np.uint64)  # 单元之 ID
+            self.state_on = np.full(N_units, False)  # 运作单元在物理层面上是否被启用，True 表示启用，False 表示未启用
+
+        pass  # class
+
+    @dataclass
     class NeuralNetUnit():
         """
         定义神经网络器之结构化数组的数据类型。

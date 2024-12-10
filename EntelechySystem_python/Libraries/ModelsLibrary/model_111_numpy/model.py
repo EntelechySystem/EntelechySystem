@@ -40,7 +40,7 @@ class Model:
         ## 初始化单元众
 
         ### 定义神经元
-        self.N_ne_units = gb['神经元预留位总数量']
+        self.N_ne_units = int(gb['计算神经元预留位总数量'])
         self.N_op_on = int(gb['运作单元预留位总数量'] / 2)
         self.N_op_units_Control = int(self.N_op_on / 64)
         self.N_op_units_Container = int(self.N_op_on / 8)
@@ -63,6 +63,11 @@ class Model:
 
         gb['起始gid'] = 0
 
+        ### 初始化运作单元实体
+        self.op_entity_units = ModelDefine.OperationUnitEntities(
+            gb['运作单元预留位总数量'],
+        )
+
         ### 初始化控制运作单元
         self.op_units_Control = ModelDefine.OperationUnits(
             self.N_op_units_Control,
@@ -72,6 +77,7 @@ class Model:
         )
         logging.info("初始化的控制运作单元")
         Tools.print_units_values(self.op_units_Control)
+        self.op_entity_units.uid[gb['起始gid']:gb['起始gid'] + self.N_op_units_Control] = self.op_units_Control.uid
 
         ### 初始化容器运作单元
         gb['起始gid'] += self.N_op_units_Control
@@ -183,9 +189,16 @@ class Model:
                 ids_point += N_controlUnits_level3Center
 
                 # #NOW 每一个三级控制中心之每一个控制单元都连接一个概念单元
-                ids_from = ids_level3Center[0]
-                ids_to = np.arange(self.N_op_units_Control, self.N_op_units_Control + self.N_op_units_Conception)
+                ids_from = ids_level3Center
+                # 查询概念单元的 ID
 
+                gids_to = self.op_units_Conception.gid[self.op_units_Conception.gid]
+                for j in range(0, len(gids_to), len(ids_from)):
+                    gids_to_part = gids_to[j:j + len(ids_from)]
+                    if len(gids_to_part) < len(ids_from):
+                        ids_from = ids_from[:len(gids_to_part)]
+                    self.op_units_Control.links_id[ids_from, gids_to_part] = 1
+                self.op_units_Control.links_id[ids_from, gids_to] = 1
         pass  # function
 
     def model_content(self, gb: dict):
