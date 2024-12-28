@@ -1,0 +1,18 @@
+conception={
+    "name": "conception_test",
+    "description": "This is a test conception",
+    "concepts": [
+        {
+            "name": "concept_test",
+            "description": "This is a test concept",
+            "attributes": [
+                {
+                    "name": "attribute_test",
+                    "description": "This is a test attribute",
+                    "type": "string",
+                    "value": "test"
+                }
+            ]
+        }
+    ]
+}

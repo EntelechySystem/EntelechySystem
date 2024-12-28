@@ -17,11 +17,11 @@ def main():
     if config['is_use_xlsx_as_config_file']:
         # 导入配置文件，从 Excel 文件
         config = DataManageTools.load_configs_from_excel_file_then_save_as_python_file(Path(folderpath_config))
-        config.update(config['is_use_xlsx_as_config_file'])
     else:
         # 导入配置文件，从 Python 文件
         config = DataManageTools.load_configs_from_python_file_then_save_as_excel_file(Path(folderpath_config, 'config.py'))
         pass  # if
+    config.update(config)
     # 保存为 PKL 文件
     with open(Path(folderpath_config, r"config.pkl"), 'wb') as f:
         pickle.dump(config, f)
