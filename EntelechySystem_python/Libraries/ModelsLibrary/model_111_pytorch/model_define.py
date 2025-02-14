@@ -1,14 +1,12 @@
 """
 定义单元众 Units 及其相关操作
 """
-from dataclasses import dataclass
 
 import numpy as np
 
 import torch
 
-from engine.functions.ComplexIntelligenceSystem.Core.tools import Tools
-from .model_settings import ModelSettings
+from engine.tools.encode_decode_tools import EncodeDecodeTools
 from dataclasses import dataclass
 
 
@@ -106,7 +104,7 @@ class ModelDefine():
             self.links_soft = torch.tensor((N_units, N_units), dtype=torch.int32).to_sparse()  # 运作单元之 id 软连接（N×N COO 存储格式稀疏矩阵）
             self.links_id = torch.tensor((N_units, N_units), dtype=torch.bool).to_sparse()  # 运作单元之 id 硬连接（N×N COO 存储格式稀疏矩阵）
             self.content = torch.empty((N_units, N_char), dtype=torch.uint32)  # 运作单元之内容
-            self.units_name = torch.from_numpy(np.array([Tools.encode_ascii_string_array_to_pytorch_tensor(Tools.generate_unique_identifier()) for i in range(N_units)]))  # 运作单元之名称
+            self.units_name = torch.from_numpy(np.array([EncodeDecodeTools.encode_ascii_string_array_to_pytorch_tensor(EncodeDecodeTools.generate_unique_identifier()) for i in range(N_units)]))  # 运作单元之名称
             self.explanation = torch.empty((N_units, N_char_explanation), dtype=torch.uint32)  # 运作单元之解释
             self.notes = torch.empty((N_units, N_char_notes), dtype=torch.uint32)  # 运作单元之备注
             pass  # function
@@ -139,7 +137,7 @@ class ModelDefine():
                 init_gid: 初始全局 ID 偏移值
             """
             self.gid = torch.arange(init_gid, init_gid + N_units)  # 运作单元之全局 ID
-            self.units_name = torch.from_numpy(np.array([Tools.encode_ascii_string_array_to_pytorch_tensor(Tools.generate_unique_identifier()) for i in range(N_units)]))  # 运作单元之名称
+            self.units_name = torch.from_numpy(np.array([EncodeDecodeTools.encode_ascii_string_array_to_pytorch_tensor(EncodeDecodeTools.generate_unique_identifier()) for i in range(N_units)]))  # 运作单元之名称
             self.explanation = torch.empty((N_units, N_char_explanation), dtype=torch.uint32)  # 运作单元之解释
             self.notes = torch.empty((N_units, N_char_notes), dtype=torch.uint32)  # 运作单元之备注
             pass  # function

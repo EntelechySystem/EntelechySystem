@@ -20,7 +20,7 @@ class ModelDefine():
         定义运作单元实体众之结构化数组的数据类型。
         """
 
-        def __init__(self, N_units: int, max_N_links: int):
+        def __init__(self, N_units: int):
             self.gid = np.arange(N_units, dtype=np.uint64)  # 单元之全局 ID
             self.tid = np.zeros(N_units, dtype=np.uint64)  # 单元之类型 ID
             self.uid = np.zeros(N_units, dtype=np.uint64)  # 单元之 ID
