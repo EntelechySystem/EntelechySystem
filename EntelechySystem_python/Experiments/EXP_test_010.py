@@ -2,7 +2,7 @@
 CIS 010 实验主程序
 """
 
-from engine.simulator.simulator import simulator
+from simulator import simulator
 
 
 def main():
