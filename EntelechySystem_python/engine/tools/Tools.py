@@ -162,8 +162,6 @@ class Tools:
             str_folderpath_system: str,
             str_folderpath_config: str,
             str_folderpath_parameters: str,
-            str_foldername_engine: str,
-            # str_folderpath_relpath_engine: str,
             # str_folderpath_relpath_CIS: str,
             str_folderpath_models: str,
             str_folderpath_settings: str,
@@ -173,6 +171,10 @@ class Tools:
             str_folderpath_world_environment: str,
             str_folderpath_agents: str,
             # str_folderpath_relpath_LMS: str,
+            str_folderpath_engine: str,
+            # str_folderpath_relpath_engine: str,
+            # str_foldername_workstage: str,
+            str_folderpath_workstage: str,
             str_folderpath_root_experiments_output: str,
             str_folderpath_relpath_outputData: str,
             str_foldername_outputData: str,
@@ -189,7 +191,6 @@ class Tools:
             str_folderpath_system (str): 系统文件夹相对路径字符串
             str_folderpath_config (str): 实验配置项文件夹相对路径字符串
             str_folderpath_parameters (str): 实验参数项文件夹相对路径字符串
-            str_foldername_engine (str): 引擎所在的项目之名称
             str_folderpath_relpath_CIS (str): 当前项目根路径到 CIS 项目之相对路径
             str_folderpath_models (str): 智能模型文件夹相对路径字符串
             str_folderpath_settings (str): 实验设置项文件夹相对路径字符串
@@ -199,6 +200,8 @@ class Tools:
             str_folderpath_world_environment (str): 世界环境模型文件夹相对路径字符串
             str_folderpath_agents (str): 实验实验个体众数据初始化设置项文件夹相对路径字符串
             str_folderpath_relpath_LMS (str): 当前项目根路径到 LMS 项目之相对路径
+            str_foldername_engine (str): 引擎所在的项目之名称
+            str_folderpath_workstage (str): 模型运作区域文件夹相对路径字符串
             str_folderpath_root_experiments_output (str): 实验输出文件夹根相对路径字符串
             str_folderpath_relpath_outputData (str): 当前项目根路径到输出数据所在的主文件夹之相对路径
             str_foldername_outputData (str): 输出数据所在的主文件夹之名称
@@ -208,6 +211,7 @@ class Tools:
         Returns:
             folderpath_project (Path): 项目文件夹路径
             folderpath_engine (Path): 引擎工具文件夹路径
+            folderpath_workstage (Path): 模型运作区域文件夹路径
             folderpath_experiments_projects (Path): 实验项目所在文件夹路径
             folderpath_system (Path): 系统文件夹路径
             folderpath_config (Path): 实验配置项文件夹路径
@@ -234,7 +238,8 @@ class Tools:
         # 设置项目文件夹路径
         folderpath_project = Tools._get_current_project_rootpath()
         # folderpath_engine = Tools.get_project_rootpath(str_foldername_engine, str_folderpath_relpath_engine)
-        folderpath_engine = folderpath_project / "EntelechySystem_python/engine"
+        folderpath_engine = folderpath_project / str_folderpath_engine
+        folderpath_workstage = folderpath_project / str_folderpath_workstage
         folderpath_outputData = Tools.get_project_rootpath(str_foldername_outputData, str_folderpath_relpath_outputData)
 
         folderpath_experiments_projects = folderpath_project / str_folderpath_experiments_projects
@@ -296,6 +301,7 @@ class Tools:
         return (
             folderpath_project,
             folderpath_engine,
+            folderpath_workstage,
             folderpath_experiments_projects,
             folderpath_system,
             folderpath_config,
