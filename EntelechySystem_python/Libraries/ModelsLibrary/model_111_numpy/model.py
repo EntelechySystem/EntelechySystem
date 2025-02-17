@@ -2,7 +2,8 @@
 模型
 """
 
-import np, logging
+import logging
+import numpy as np
 # from model_define import NeuralNetUnit, NeuralNetUnit_ForHumanRead, OperationUnits
 # from EntelechySystem_python.engine.libraries.models.model_define import ModelDefine
 from engine.tools.encode_decode_tools import EncodeDecodeTools

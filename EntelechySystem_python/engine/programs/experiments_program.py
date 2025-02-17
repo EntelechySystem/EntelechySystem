@@ -164,124 +164,141 @@ def main(gb):
 
     gb['len_parameters_works'] = num_parameters_works
 
-    # 导入本次实验所需的系统
+    from workstage.system.system import system
 
-    if not (gb['is_develop_mode'] and gb['is_maintain_files_in_simulator_when_develop_mode']):
-        # 如果是应用实验状态，则复制系统到输出文件夹下，另外导出一份到`engine/system`文件夹下
-        Tools.delete_and_recreate_folder(gb['folderpath_experiments_output_system'], is_auto_confirmation=gb['is_auto_confirmation'])
-        Tools.copy_files_from_other_folders(gb['folderpath_system'], gb['folderpath_experiments_output_system'], is_auto_confirmation=gb['is_auto_confirmation'])
-        Tools.delete_and_recreate_folder(Path(gb['folderpath_engine'], "engine/libraries/system"), is_auto_confirmation=gb['is_auto_confirmation'])
-        Tools.copy_files_from_other_folders(gb['folderpath_system'], Path(gb['folderpath_engine'], "engine/libraries/system"), is_auto_confirmation=gb['is_auto_confirmation'])
-    else:
-        pass  # if
-
-    # 导入系统集合
-    # Builder.build_entities_by_execute(gb)
-    systems = Tools.import_modules_from_package(str(Path(gb['folderpath_engine'], r'engine/libraries/system/content')), r"[Ss]ystem", gb['folderpath_engine'])
+    # if not (gb['is_develop_mode'] and gb['is_maintain_files_in_simulator_when_develop_mode']):
+    #     # 如果是应用实验状态，则复制系统到输出文件夹下，另外导出一份到`engine/system`文件夹下
+    #     Tools.delete_and_recreate_folder(gb['folderpath_experiments_output_system'], is_auto_confirmation=gb['is_auto_confirmation'])
+    #     Tools.copy_files_from_other_folders(gb['folderpath_system'], gb['folderpath_experiments_output_system'], is_auto_confirmation=gb['is_auto_confirmation'])
+    #     Tools.delete_and_recreate_folder(Path(gb['folderpath_engine'], "engine/libraries/system"), is_auto_confirmation=gb['is_auto_confirmation'])
+    #     Tools.copy_files_from_other_folders(gb['folderpath_system'], Path(gb['folderpath_engine'], "engine/libraries/system"), is_auto_confirmation=gb['is_auto_confirmation'])
+    # else:
+    #     pass  # if
+    #
+    # # 导入系统集合
+    # # Builder.build_entities_by_execute(gb)
+    # systems = Tools.import_modules_from_package(gb['folderpath_workstage'] / "system", r"[Ss]ystem", gb['folderpath_workstage'])
 
     # 导出配置数据
     Collector.export_config_data(gb)
 
-    # 运行实验组
-    logging.info("\n\n\n实验组开始：\n\n")
-
     gb['experiments_running_time'] = 0  # 初始化实验组运行总时长
     gb['export_data_running_time'] = 0  # 初始化导出数据运行总时长
 
-    system = list(systems.values())[0]  # 获取当前实验对应的系统。如果一次批处理只有一个系统，那么就用这个。
+    match gb['mode_run_experiments']:
+        case '直接运行系统':  # #NOTE  模式一：单个实验：直接运行系统
+            logging.info("\n\n\n开始运行系统：\n\n")
 
-    # # 连接实验组作业管理数据库
-    # conn = sqlite3.connect(Path(gb['folderpath_experiments_output_log'], "experiments_works_status.db"))
-    # c = conn.cursor()
-    # c.execute("SELECT id,status FROM experiments WHERE status='TASK'")
-    # rows = c.fetchall()
-    # list_idsExp_TASK = [row[0] for row in rows]  # 获取实际上需要运行的实验组 id 列表
-    parameters_works_TASK = parameters_works[parameters_works['exp_id'].isin(list_idsExp_TASK)]  # 获取实际上需要运行的实验组参数作业数据框
+            gb['simulator_start_time'] = timeit.default_timer()  # 记录系统开始运行时刻
 
-    if gb['is_enable_multiprocessing']:
-        # ## #NOTE：多进程并行处理 #TODO等到后续需要的时候再进行适配
-        # # para = para.to_dict()  # 将参数数据框转换为字典
-        # # system = systems[f"system_{para['system_name']}"]  # 获取当前实验对应的系统。如果一次批处理不止一个系统，那么就用这个。
-        #
-        # ## 并行计算时，关闭主进程日志记录器，改由子进程记录各自的日志
-        # log_file_handler.close()
-        # logger.removeHandler(log_file_handler)
-        #
-        # num_cores = int(multiprocessing.cpu_count() * gb['percent_core_for_multiprocessing'])  # 计算 CPU 核心数
-        #
-        # ## 生成作业组
-        # # gb['id_experiment'] = 0  # 设定当前实验编号
-        # works = []
-        # for i, para in parameters_works_TASK.iterrows():
-        #     exp_id = int(parameters_works_TASK.loc[i, 'exp_id'])  # 获取当前实验编号
-        #     work = (exp_id, gb, para, system)
-        #     works.append(work)
-        #     pass  # for
-        #
-        # ## 并行运行实验作业
-        # with Pool(num_cores) as p:
-        #     p.starmap(fun_single_experiment_work, works)
-        #     pass  # with
-        #
-        # ## 并行处理之后，读取各个实验日志文件之内容追加到主进程日志文件之内容
-        # if gb['is_enable_multiprocessing']:
-        #     with open(Path(gb['folderpath_experiments_output_log'], "outputlog.txt"), 'a') as f:
-        #         for i, para in parameters_works_TASK.iterrows():
-        #             if Path(gb['folderpath_experiments_output_log'], f"outputlog_{i + 1}_exp.txt").exists():
-        #                 with open(Path(gb['folderpath_experiments_output_log'], f"outputlog_{i + 1}_exp.txt"), 'r') as f_sub:
-        #                     f.write(f_sub.read())
-        #                     pass  # with
-        #                 pass  # if
-        #             pass  # for
-        #         pass  # with
-        #     pass  # if
-        pass
+            system(gb=gb)
 
-    else:
-        # NOTE：串行处理
+            gb['simulator_end_time'] = timeit.default_timer()  # 记录系统结束运行时刻
+            gb['simulator_running_time'] = gb['simulator_end_time'] - gb['simulator_start_time']  # 记录运行时长
 
-        gb['simulator_start_time'] = timeit.default_timer()  # 记录串行运行模式下，模拟器开始运行时刻
+            logging.info(f"运行系统结束。\n系统运行总时长：{gb['experiments_running_time']} 秒。\n导出数据运行总时长：{gb['export_data_running_time']} 秒。\n运行总时长：{gb['simulator_running_time']}秒。")
 
-        for i, para in parameters_works_TASK.iterrows():
-            para = para.to_dict()  # 将参数数据框转换为字典
-            # system = systems[f"system_{para['system_name']}"]  # 获取当前实验对应的系统。如果一次批处理不止一个系统，那么就用这个。
-            system = list(systems.values())[0]  # 获取当前实验对应的系统。如果一次批处理只有一个系统，那么就用这个。
-            gb['id_experiment'] = i + 1  # 设定当前实验编号
+        case '运行实验组':  # #NOTE 模式二：运行实验组
+            logging.info("\n\n\n实验组开始：\n\n")
 
-            # 运行一次实验作业
-            fun_single_experiment_work(gb['id_experiment'], gb, para, system)
-            pass  # for
+            # system = list(systems.values())[0]  # 获取当前实验对应的系统。如果一次批处理只有一个系统，那么就用这个。
 
-        gb['simulator_end_time'] = timeit.default_timer()  # 记录串行运行模式下，记录模拟器结束运行时刻
-        gb['simulator_running_time'] = gb['simulator_end_time'] - gb['simulator_start_time']  # 记录串行运行模式下，模拟器运行时长
+            # # 连接实验组作业管理数据库
+            # conn = sqlite3.connect(Path(gb['folderpath_experiments_output_log'], "experiments_works_status.db"))
+            # c = conn.cursor()
+            # c.execute("SELECT id,status FROM experiments WHERE status='TASK'")
+            # rows = c.fetchall()
+            # list_idsExp_TASK = [row[0] for row in rows]  # 获取实际上需要运行的实验组 id 列表
+            parameters_works_TASK = parameters_works[parameters_works['exp_id'].isin(list_idsExp_TASK)]  # 获取实际上需要运行的实验组参数作业数据框
 
-        logging.info(f"实验组结束。\n实验组运行总时长：{gb['experiments_running_time']} 秒。\n导出数据运行总时长：{gb['export_data_running_time']} 秒。\n模拟器运行总时长：{gb['simulator_running_time']}秒。")
+            if gb['is_enable_multiprocessing']:
+                # ## #NOTE：多进程并行处理 #TODO等到后续需要的时候再进行适配
+                # # para = para.to_dict()  # 将参数数据框转换为字典
+                # # system = systems[f"system_{para['system_name']}"]  # 获取当前实验对应的系统。如果一次批处理不止一个系统，那么就用这个。
+                #
+                # ## 并行计算时，关闭主进程日志记录器，改由子进程记录各自的日志
+                # log_file_handler.close()
+                # logger.removeHandler(log_file_handler)
+                #
+                # num_cores = int(multiprocessing.cpu_count() * gb['percent_core_for_multiprocessing'])  # 计算 CPU 核心数
+                #
+                # ## 生成作业组
+                # # gb['id_experiment'] = 0  # 设定当前实验编号
+                # works = []
+                # for i, para in parameters_works_TASK.iterrows():
+                #     exp_id = int(parameters_works_TASK.loc[i, 'exp_id'])  # 获取当前实验编号
+                #     work = (exp_id, gb, para, system)
+                #     works.append(work)
+                #     pass  # for
+                #
+                # ## 并行运行实验作业
+                # with Pool(num_cores) as p:
+                #     p.starmap(fun_single_experiment_work, works)
+                #     pass  # with
+                #
+                # ## 并行处理之后，读取各个实验日志文件之内容追加到主进程日志文件之内容
+                # if gb['is_enable_multiprocessing']:
+                #     with open(Path(gb['folderpath_experiments_output_log'], "outputlog.txt"), 'a') as f:
+                #         for i, para in parameters_works_TASK.iterrows():
+                #             if Path(gb['folderpath_experiments_output_log'], f"outputlog_{i + 1}_exp.txt").exists():
+                #                 with open(Path(gb['folderpath_experiments_output_log'], f"outputlog_{i + 1}_exp.txt"), 'r') as f_sub:
+                #                     f.write(f_sub.read())
+                #                     pass  # with
+                #                 pass  # if
+                #             pass  # for
+                #         pass  # with
+                #     pass  # if
+                pass
 
-        # 默认程序打开输出文件查看
-        if gb['is_auto_open_outputlog']:
-            system = platform.system()
-            if system == 'Darwin':
-                os.system(r"open " + str(Path(gb['folderpath_experiments_output_log'], r"outputlog.txt")))
-            elif system == 'Windows':
-                os.startfile(str(Path(gb['folderpath_experiments_output_log'], r"outputlog.txt")))
-            elif system == 'Linux':
-                os.system('xdg-open ' + str(Path(gb['folderpath_experiments_output_log'], r"outputlog.txt")))  # #BUG 还没测试过
             else:
-                print("Unsupported operating system")
+                # NOTE：串行处理
+
+                gb['simulator_start_time'] = timeit.default_timer()  # 记录串行运行模式下，模拟器开始运行时刻
+
+                for i, para in parameters_works_TASK.iterrows():
+                    para = para.to_dict()  # 将参数数据框转换为字典
+                    # system = systems[f"system_{para['system_name']}"]  # 获取当前实验对应的系统。如果一次批处理不止一个系统，那么就用这个。
+                    # system = list(systems.values())[0]  # 获取当前实验对应的系统。如果一次批处理只有一个系统，那么就用这个。
+                    gb['id_experiment'] = i + 1  # 设定当前实验编号
+
+                    # 运行一次实验作业
+                    fun_single_experiment_work(gb['id_experiment'], gb, para, system)
+                    pass  # for
+
+                gb['simulator_end_time'] = timeit.default_timer()  # 记录串行运行模式下，记录模拟器结束运行时刻
+                gb['simulator_running_time'] = gb['simulator_end_time'] - gb['simulator_start_time']  # 记录串行运行模式下，模拟器运行时长
+
+                logging.info(f"实验组结束。\n实验组运行总时长：{gb['experiments_running_time']} 秒。\n导出数据运行总时长：{gb['export_data_running_time']} 秒。\n模拟器运行总时长：{gb['simulator_running_time']}秒。")
+
+                # 默认程序打开输出文件查看
+                if gb['is_auto_open_outputlog']:
+                    system = platform.system()
+                    if system == 'Darwin':
+                        os.system(r"open " + str(Path(gb['folderpath_experiments_output_log'], r"outputlog.txt")))
+                    elif system == 'Windows':
+                        os.startfile(str(Path(gb['folderpath_experiments_output_log'], r"outputlog.txt")))
+                    elif system == 'Linux':
+                        os.system('xdg-open ' + str(Path(gb['folderpath_experiments_output_log'], r"outputlog.txt")))  # #BUG 还没测试过
+                    else:
+                        print("Unsupported operating system")
+                        pass  # if
+                    pass  # if
+
+                if gb['is_ignore_warning']:
+                    warnings.filterwarnings("default")  # 恢复警告
+                    pass  # if
+
+                # ## 关闭日志
+                # log_file_handler.close()
+                # logger.removeHandler(log_file_handler)
+                # log_console_handler.close()
+                # logger.removeHandler(log_console_handler)
+
                 pass  # if
-            pass  # if
 
-        if gb['is_ignore_warning']:
-            warnings.filterwarnings("default")  # 恢复警告
-            pass  # if
-
-        # ## 关闭日志
-        # log_file_handler.close()
-        # logger.removeHandler(log_file_handler)
-        # log_console_handler.close()
-        # logger.removeHandler(log_console_handler)
-
-        pass  # if
+        case _:
+            logging.error("实验组模拟程序运行模式设置错误！")
+            pass  # match
 
     # 连接 SQLite 数据库，统计实验组之本次作业之完成情况
     num_parameters_works = len(parameters_works)

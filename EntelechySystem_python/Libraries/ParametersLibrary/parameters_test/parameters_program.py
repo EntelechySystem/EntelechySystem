@@ -2,13 +2,16 @@
 程序：设置参数变量数据记录 parameter_variables 。
 """
 
-import pickle, Path, sys, os, np, pd, itertools, deepcopy
+import pickle, sys, os, itertools
+from pathlib import Path
+import numpy as np
+import pandas as pd
+from copy import deepcopy
 from EntelechySystem_python.engine.tools.DataManageTools import DataManageTools
 from EntelechySystem_python.engine.tools.Tools import Tools
 
 
 def main():
-
     folderpath_parameters = folderpath
 
     # 从 Excel 文件导入参数文件为数据框

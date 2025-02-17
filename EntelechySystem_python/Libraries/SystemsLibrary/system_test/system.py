@@ -6,18 +6,18 @@ import numpy as np
 import pygame
 
 from EntelechySystem_python.engine.tools.Tools import Tools
-import Path, pd
+import pandas as pd
+from pathlib import Path
 import matplotlib.pyplot as plt
 
 import logging
 # from AgentsWorldSystem_python.Libraries.WorldLibrary.中国象棋.world_environment import *
 # from AgentsWorldSystem_python.Libraries.WorldLibrary.烧水倒水.world_environment import *
 
-from EntelechySystem_python.engine.libraries.models.model import Model
-from EntelechySystem_python.engine.libraries.world_environment.world_environment import Scenario, World
+from workstage.models.model import Model
+from workstage.world_environment.world_environment import Scenario, World
 
-
-def system(para: dict, gb: dict):
+def system(gb: dict, para: dict = None):
     ## #NOW 导入智能体大脑模型
     m = Model(gb)
 
