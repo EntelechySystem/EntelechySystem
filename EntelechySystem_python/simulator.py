@@ -21,7 +21,7 @@ def simulator(config: dict):
     import os, platform, logging, shutil, datetime, time, subprocess, pickle, base64
     from pathlib import Path
     from copy import deepcopy, copy
-    from EntelechySystem_python.engine.tools.Tools import Tools
+    from engine.tools.Tools import Tools
     from EntelechySystem_python.engine.tools.DataManageTools import DataManageTools
     from EntelechySystem_python.engine.core.define_engineGlobalVariables import gb
 
