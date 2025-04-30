@@ -142,4 +142,7 @@ def system(gb: dict, para: dict = None):
 
 
 if __name__ == '__main__':
+    print("程序运行开始！")
+    system(gb=dict(folderpath_data=Path('data')), para=None)
+    print("程序运行结束！")
     pass  # if
