@@ -1,5 +1,7 @@
 """
-配置项
+配置项。
+
+#进度/停用
 """
 
 import pickle, sys, base64, os
