@@ -1,4 +1,4 @@
-# from engine.tools.Tools import Tools
+# from EntelechySystem_python.engine.tools.Tools import Tools
 import numpy as np
 import pygame
 import matplotlib.pyplot as plt
@@ -10,7 +10,7 @@ font_path = '/System/Library/Fonts/STHeiti Light.ttc'  # macOS 上的中文字�
 font_prop = font_manager.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = font_prop.get_name()
 
-from engine.tools.Tools import Tools
+from EntelechySystem_python.engine.tools.Tools import Tools
 
 from Libraries.WorldLibrary.Virtual2DMiniNurseryEnv.world_environment import Scenario
 from Libraries.WorldLibrary.Virtual2DMiniNurseryEnv.world_environment import World

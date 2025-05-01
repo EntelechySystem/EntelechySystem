@@ -2,9 +2,9 @@
 模型设置项  #TODO 未完成
 """
 
-from engine.externals import pickle, Path, sys, base64, os
-from engine.tools.DataManageTools import DataManageTools
-from engine.tools.Tools import Tools
+import pickle, Path, sys, base64, os
+from EntelechySystem_python.engine.tools.DataManageTools import DataManageTools
+from EntelechySystem_python.engine.tools.Tools import Tools
 
 
 def main():

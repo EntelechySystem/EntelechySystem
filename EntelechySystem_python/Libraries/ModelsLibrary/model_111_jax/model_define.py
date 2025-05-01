@@ -1,14 +1,13 @@
 """
 定义单元众 Units 及其相关操作
 """
-from dataclasses import dataclass
 
 import numpy as np
 
 import jax.numpy as jnp
 from jax.experimental.sparse import BCOO
 
-from engine.functions.ComplexIntelligenceSystem.Core.tools import Tools
+from engine.tools.encode_decode_tools import EncodeDecodeTools
 from .model_settings import ModelSettings
 from dataclasses import dataclass
 
@@ -57,7 +56,7 @@ class ModelDefine():
                 max_num_links:
             """
             self.gid = jnp.arange(N_units, dtype=jnp.int64)
-            self.units_name = np.array([Tools.generate_unique_identifier() for i in range(N_units)], np.dtype('S32'))
+            self.units_name = np.array([EncodeDecodeTools.generate_unique_identifier() for i in range(N_units)], np.dtype('S32'))
             self.units_type = jnp.array(np.full(N_units, ModelSettings.dict_written_type_of_Units['neuron']), dtype=jnp.uint8)
             pass  # function
 
@@ -108,7 +107,7 @@ class ModelDefine():
             # self.links_id = jnp.empty((N_units, N_units), dtype=jnp.int32),  # 运作单元之 id 硬连接（N×N）
             self.links_id = BCOO((jnp.empty((N_units, N_units), dtype=jnp.int32), (jnp.empty((N_units,), dtype=jnp.int32), jnp.empty((N_units,), dtype=jnp.int32))), shape=(N_units, N_units))  # 运作单元之 id 硬连接（N×N）
             self.content = jnp.empty((N_units, N_char), dtype=jnp.uint32)  # 运作单元之内容
-            self.units_name = jnp.array([Tools.generate_unique_identifier() for i in range(N_units)])  # 运作单元之唯一名称
+            self.units_name = jnp.array([EncodeDecodeTools.generate_unique_identifier() for i in range(N_units)])  # 运作单元之唯一名称
             self.explanation = jnp.empty((N_units, N_char_explanation), dtype=jnp.uint32)  # 运作单元之解释
             self.notes = jnp.empty((N_units, N_char_notes), dtype=jnp.uint32)  # 运作单元之备注
             pass  # function

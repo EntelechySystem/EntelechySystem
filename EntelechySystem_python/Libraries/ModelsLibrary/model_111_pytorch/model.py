@@ -2,14 +2,12 @@
 模型
 """
 
-from engine.externals import np, logging
+import logging
 # from model_define import NeuralNetUnit, NeuralNetUnit_ForHumanRead, OperationUnits
-# from engine.libraries.models.model_define import ModelDefine
-from engine.functions.ComplexIntelligenceSystem.Core.tools import Tools
+# from EntelechySystem_python.engine.libraries.models.model_define import ModelDefine
+from engine.tools.encode_decode_tools import EncodeDecodeTools
 from .model_define import ModelDefine
 from .model_settings import ModelSettings
-
-import torch
 
 
 class Model:
@@ -60,7 +58,7 @@ class Model:
 
         # 打印初始化的神经元
         logging.info("初始化的神经元")
-        Tools.print_units_values(self.ne_units)
+        EncodeDecodeTools.print_units_values(self.ne_units)
 
         gb['起始gid'] = 0
 
@@ -74,7 +72,7 @@ class Model:
             gb['起始gid']
         )
         logging.info("初始化的控制运作单元")
-        Tools.print_units_values(self.op_units_Control)
+        EncodeDecodeTools.print_units_values(self.op_units_Control)
 
         ### 初始化容器运作单元
         gb['起始gid'] += self.N_op_units_Control
@@ -98,7 +96,7 @@ class Model:
             gb['起始gid']
         )
         logging.info("初始化的容器运作单元")
-        Tools.print_units_values(self.op_units_Goal)
+        EncodeDecodeTools.print_units_values(self.op_units_Goal)
 
         ### 初始化任务运作单元
         gb['起始gid'] += self.N_op_units_Goal
@@ -111,7 +109,7 @@ class Model:
             gb['起始gid']
         )
         logging.info("初始化的任务运作单元")
-        Tools.print_units_values(self.op_units_Task)
+        EncodeDecodeTools.print_units_values(self.op_units_Task)
 
         ### 初始化概念运作单元
         gb['起始gid'] += self.N_op_units_Task
@@ -124,7 +122,7 @@ class Model:
             gb['起始gid']
         )
         logging.info("初始化的概念运作单元")
-        Tools.print_units_values(self.op_units_Conception)
+        EncodeDecodeTools.print_units_values(self.op_units_Conception)
 
         ## 初始化模型单元结构
 

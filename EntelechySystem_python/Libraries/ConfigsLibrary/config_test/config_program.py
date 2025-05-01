@@ -1,10 +1,13 @@
 """
-配置项
+配置项。
+
+#进度/停用
 """
 
-from engine.externals import pickle, Path, sys, base64, os
-from engine.tools.DataManageTools import DataManageTools
-from engine.tools.Tools import Tools
+import pickle, sys, base64, os
+from pathlib import Path
+from EntelechySystem_python.engine.tools.DataManageTools import DataManageTools
+from EntelechySystem_python.engine.tools.Tools import Tools
 
 
 def main():

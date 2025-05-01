@@ -24,24 +24,27 @@ config = dict(
     下标开始=False,  # 数据类型：整数；配置类别：开发；备注：在所使用的编程语言中，下标开始计数的值。例如 Python 下标开始的计数是 0 ，Julia 下标开始的计数是 1 。默认 1 。 ；
     engine_version='v0.0.8_alpha',  # 数据类型：字符串；配置类别：配置；备注：引擎版本。 ；
     folderpath_experiments_projects='Experiments/CIS_010',  # 数据类型：路径字符串；配置类别：路径；备注：实验程序文件所在文件夹 ；
-    foldername_engine='EntelechyEngine',  # 数据类型：路径字符串；配置类别：路径；备注：模拟器所在工程文件夹名称 ；
-    folderpath_relpath_engine='../',  # 数据类型：路径字符串；配置类别：路径；备注：模拟器所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；
+    # foldername_workstage='workstage',  # 数据类型：路径字符串；配置类别：路径；备注：模型运作区域文件夹名称 ；
+    folderpath_workstage='workstage',  # 数据类型：路径字符串；配置类别：路径；备注：模型运作区域文件夹路径 ；
+    # foldername_engine='engine',  # 数据类型：路径字符串；配置类别：路径；备注：模拟器所在工程文件夹名称 ；
+    folderpath_engine='EntelechySystem_python/engine',  # 数据类型：路径字符串；配置类别：路径；备注：模拟器所在工程文件夹名称 ；
+    # folderpath_relpath_engine='../',  # 数据类型：路径字符串；配置类别：路径；备注：模拟器所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；  #HACK 2025-02-14：因为合并库内容，所以这个路径不再需要
     folderpath_system='EntelechySystem_python/Libraries/SystemsLibrary/system_test',  # 数据类型：路径字符串；配置类别：路径；备注：配置项设置所在的文件夹 ；
     folderpath_config='EntelechySystem_python/Libraries/ConfigsLibrary/config_test',  # 数据类型：路径字符串；配置类别：路径；备注：配置项设置所在的文件夹 ；
     folderpath_parameters='EntelechySystem_python/Libraries/ParametersLibrary/parameters_test',  # 数据类型：路径字符串；配置类别：路径；备注：参数设置所在的文件夹 ；
-    # folderpath_relpath_CIS='../',  # 数据类型：路径字符串；配置类别：路径；备注：CIS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
+    # folderpath_relpath_CIS='../',  # 数据类型：路径字符串；配置类别：路径；备注：CIS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
     folderpath_models='EntelechySystem_python/Libraries/ModelsLibrary/model_111_numpy',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
     # folderpath_models='EntelechySystem_python/Libraries/ModelsLibrary/model_111_pytorch',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
     # folderpath_models='EntelechySystem_python/Libraries/ModelsLibrary/model_111_jax',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
     folderpath_settings='EntelechySystem_python/Libraries/SettingsLibrary/settings_test',  # 数据类型：路径字符串；配置类别：路径；备注：设置项所在的文件夹 ；
-    # folderpath_relpath_ECS='../',  # 数据类型：路径字符串；配置类别：路径；备注：ECS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
+    # folderpath_relpath_ECS='../',  # 数据类型：路径字符串；配置类别：路径；备注：ECS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
     folderpath_world_conception_knowledge='EntelechySystem_python/Libararies/ConceptionLibrary/conception_test',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
-    # folderpath_relpath_AWS='../',  # 数据类型：路径字符串；配置类别：路径；备注：AWS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
+    # folderpath_relpath_AWS='../',  # 数据类型：路径字符串；配置类别：路径；备注：AWS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
     folderpath_world_environment='EntelechySystem_python/Libraries/WorldLibrary/Virtual2DMiniNurseryEnv',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
     folderpath_agents='EntelechySystem_python/Libraries/AgentsLibrary/agents_test',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
-    # folderpath_relpath_LMS='../',  # 数据类型：路径字符串；配置类别：路径；备注：LMS所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
+    # folderpath_relpath_LMS='../',  # 数据类型：路径字符串；配置类别：路径；备注：LMS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
     foldername_outputData='EntelechyData',  # 数据类型：路径字符串；配置类别：路径；备注：输出数据所在工程文件夹名称 ；
-    folderpath_relpath_outputData='../',  # 数据类型：路径字符串；配置类别：路径；备注：输出数据所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；
+    folderpath_relpath_outputData='../',  # 数据类型：路径字符串；配置类别：路径；备注：输出数据所在工程文件夹到本实验项目根路径文件夹之相对路径 ；
     folderpath_root_experiments='SimulationsData',  # 数据类型：路径字符串；配置类别：路径；备注：手动设置实验文件夹根路径； ；
     foldername_experiments_output_data='exp_output_data',  # 数据类型：路径字符串；配置类别：路径；备注：手动设置实验导出数据文件夹名称。默认"exp_output_data"； ；
     foldername_prefix_experiments='test',  # 数据类型：字符串；配置类别：命名；备注：手动设置初始生成的实验文件夹前缀名。默认"default"； ；
@@ -50,17 +53,30 @@ config = dict(
     type_of_experiments_foldername='default',  # 数据类型：字符串；配置类别：命名；备注：设置实验文件夹命名方式。取值："default"、"set manually"。默认"default"； ；
     schedule_operation='ref_schedule_operation',  # 数据类型：引用；配置类别：运行；备注：调度需要运作的程序； ；
     运行模式='交互式观察运行模式',  # 数据类型：字符串；配置类别：初始化模型；备注：运行模式。可选参数值为："批量实验作业运行模式", "交互式观察运行模式" ； ；
-    is_maintain_files_in_simulator_when_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
-    # is_maintain_files_in_simulator_when_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
+    is_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：是否处于开发模型状态。默认 False。默认情况下，模拟器通在子进程独立启用相关的程序。启用之后，在模拟器中，将通过函数调用的方式调用各个程序。启用之后，适合在 Python 3.11 开始的版本做断点调试。 ；
+    # is_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：是否处于开发模型状态。默认 False。默认情况下，模拟器通在子进程独立启用相关的程序。启用之后，在模拟器中，将通过函数调用的方式调用各个程序。启用之后，适合在 Python 3.11 开始的版本做断点调试。 ；
+    # is_maintain_files_in_simulator_when_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
+    is_maintain_files_in_simulator_when_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
+
+    # #NOTE  预加载相关的实验和库文件程序
+
     # program_预加载相关的实验和库文件程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「预加载相关的实验和库文件程序」； ；
     program_预加载相关的实验和库文件程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「预加载相关的实验和库文件程序」； ；
+
+    # #NOTE  实验组模拟程序
+
+    # 实验模拟运行模式。可选参数值为："直接运行系统", "运行实验组" 。默认是 "直接运行系统"；
+    mode_run_experiments='直接运行系统',  # 数据类型：字符串；配置类别：程序；
+
     program_实验组模拟程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「实验组模拟程序」； ；
     # program_实验组模拟程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「实验组模拟程序」； ；
+
+    # #NOTE  可视化程序
+
     # program_可视化结果程序=True,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「可视化结果程序」； ；
     program_可视化结果程序=False,  # 数据类型：布尔值；配置类别：程序；备注：是否运行「可视化结果程序」； ；
     is_rerun_all_done_works_in_the_same_experiments=True,  # 数据类型：布尔值；配置类别：配置；备注：是否重新运行所有已经完成的实验。默认 False。如果为 True，则在实验运行之前，重置该实验组当中所有的实验作业运行状态为 "RAW"。 ；
     list_idsExperiment_to_run=[1],  # 数据类型：代码段；配置类别：实验；备注：设置要运行的实验编号列表。默认 None，表示运行所有实验。 ；
-    is_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：是否处于开发模型状态。默认 False。默认情况下，模拟器通在子进程独立启用相关的程序。启用之后，在模拟器中，将通过函数调用的方式调用各个程序。启用之后，适合在 Python 3.11 开始的版本做断点调试。 ；
     is_init_model=True,  # 数据类型：布尔值；配置类别：开发；备注：是否初始化智能体模型。默认 False 。默认情况下，加载模型的时候是已经初始化过的继续需要运行的模型 ；
     # is_init_model=False,  # 数据类型：布尔值；配置类别：开发；备注：是否初始化智能体模型。默认 False 。默认情况下，加载模型的时候是已经初始化过的继续需要运行的模型 ；
 )
