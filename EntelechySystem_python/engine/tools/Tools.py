@@ -280,7 +280,7 @@ class Tools:
         folderpath_models = (folderpath_project / str_folderpath_models).resolve()  # 设定模型文件夹
         # folderpath_settings = (folderpath_project / str_folderpath_relpath_CIS, str_folderpath_settings).resolve()  # 设定实验设置项文件夹
         # folderpath_settings = (folderpath_project / str_folderpath_settings).resolve()  # 设定实验设置项文件夹
-        folderpath_world_environment = (folderpath_project / str_folderpath_relpath_AWS, str_folderpath_world_environment).resolve()  # 设定模型文件夹
+        # folderpath_world_environment = (folderpath_project / str_folderpath_relpath_AWS, str_folderpath_world_environment).resolve()  # 设定模型文件夹  #HACK 只有用到外部的环境才用到
         folderpath_world_environment = (folderpath_project / str_folderpath_world_environment).resolve()  # 设定模型文件夹
         # folderpath_agents = (folderpath_project / str_folderpath_relpath_AWS, str_folderpath_agents).resolve()  # 设定实验实验个体众数据初始化设置项文件夹
         # folderpath_agents = (folderpath_project / str_folderpath_agents).resolve()  # 设定实验实验个体众数据初始化设置项文件夹

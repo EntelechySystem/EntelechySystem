@@ -49,7 +49,7 @@ def simulator(config: dict):
             config = pickle.load(f)
 
     if is_load_config_from_python_file:
-        config = (Tools.import_modules_from_package(str(Path(config['folderpath_project'], config['folderpath_config'])), r'config', config['folderpath_project']))['config']
+        config = (Tools.import_modules_from_package(str_folderpath=str(Path(config['folderpath_project'], config['folderpath_config'])), pattern=r'config', str_folderpath_project=config['folderpath_project']))['config']
 
     # config 赋值给全局变量 gb
     gb.update(config)
@@ -253,9 +253,6 @@ def simulator(config: dict):
         #
         #     pass  # if
 
-
-
-
         # 导入智能模型（模型）
 
         # # 导入相关设置项
@@ -392,7 +389,6 @@ def simulator(config: dict):
         # logger.removeHandler(log_file_handler)
         # log_console_handler.close()
         # logger.removeHandler(log_console_handler)
-
 
         ## 运行实验组模拟程序
 
