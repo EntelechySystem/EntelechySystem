@@ -164,17 +164,17 @@ class Tools:
             str_folderpath_parameters: str,
             # str_folderpath_relpath_CIS: str,
             str_folderpath_models: str,
-            str_folderpath_settings: str,
+            # str_folderpath_settings: str,
             # str_folderpath_relpath_ECS: str,
-            str_folderpath_world_conception_knowledge: str,
-            # str_folderpath_relpath_AWS: str,
+            # str_folderpath_world_conception_knowledge: str,
+            str_folderpath_relpath_AWS: str,
             str_folderpath_world_environment: str,
-            str_folderpath_agents: str,
+            # str_folderpath_agents: str,
             # str_folderpath_relpath_LMS: str,
             str_folderpath_engine: str,
             # str_folderpath_relpath_engine: str,
             # str_foldername_workstage: str,
-            str_folderpath_workstage: str,
+            # str_folderpath_workstage: str,
             str_folderpath_root_experiments_output: str,
             str_folderpath_relpath_outputData: str,
             str_foldername_outputData: str,
@@ -182,64 +182,54 @@ class Tools:
             foldername_experiments_output_data: str
     ):
         """
-        设置实验相关的文件夹路径。包括实验设置项文件夹、模型文件夹、实验导出数据文件夹、引擎工具所在的文件夹等。
+        设置实验相关的文件夹路径。
 
-        根据【实验导出数据文件夹名称】、【实验文件夹名称】等，生成一系列文件夹路径。
+        该方法通过传入的多个路径参数，构建并创建与实验项目、输出数据及各类配置项相关的核心文件夹结构。
+        同时返回所有生成的文件夹路径，以便后续使用。
 
         Args:
-            str_folderpath_experiments_projects (str): 实验项目文件夹相对路径字符串
-            str_folderpath_system (str): 系统文件夹相对路径字符串
-            str_folderpath_config (str): 实验配置项文件夹相对路径字符串
-            str_folderpath_parameters (str): 实验参数项文件夹相对路径字符串
-            str_folderpath_relpath_CIS (str): 当前项目根路径到 CIS 项目之相对路径
-            str_folderpath_models (str): 智能模型文件夹相对路径字符串
-            str_folderpath_settings (str): 实验设置项文件夹相对路径字符串
-            str_folderpath_relpath_ECS (str): 当前项目根路径到 ECS 项目之相对路径
-            str_folderpath_world_conception_knowledge (str): 世界概念知识模型文件夹相对路径字符串
-            str_folderpath_relpath_AWS (str): 当前项目根路径到 AWS 项目之相对路径
-            str_folderpath_world_environment (str): 世界环境模型文件夹相对路径字符串
-            str_folderpath_agents (str): 实验实验个体众数据初始化设置项文件夹相对路径字符串
-            str_folderpath_relpath_LMS (str): 当前项目根路径到 LMS 项目之相对路径
-            str_foldername_engine (str): 引擎所在的项目之名称
-            str_folderpath_workstage (str): 模型运作区域文件夹相对路径字符串
-            str_folderpath_root_experiments_output (str): 实验输出文件夹根相对路径字符串
-            str_folderpath_relpath_outputData (str): 当前项目根路径到输出数据所在的主文件夹之相对路径
-            str_foldername_outputData (str): 输出数据所在的主文件夹之名称
-            foldername_experiments_output (str): 实验输出文件夹名称
-            foldername_experiments_output_data (str): 实验导出数据文件夹名称
+            str_folderpath_experiments_projects (str): 实验项目的根目录路径。
+            str_folderpath_system (str): 系统相关文件夹的相对路径。
+            str_folderpath_config (str): 配置项文件夹的相对路径。
+            str_folderpath_parameters (str): 参数项文件夹的相对路径。
+            str_folderpath_models (str): 模型文件夹的相对路径。
+            str_folderpath_relpath_AWS (str): AWS 相关文件夹的相对路径。
+            str_folderpath_world_environment (str): 世界环境文件夹的相对路径。
+            str_folderpath_engine (str): 引擎文件夹的相对路径。
+            str_folderpath_root_experiments_output (str): 实验输出根目录的相对路径。
+            str_folderpath_relpath_outputData (str): 输出数据文件夹的相对路径。
+            str_foldername_outputData (str): 输出数据文件夹的名称。
+            foldername_experiments_output (str): 实验输出主文件夹的名称。
+            foldername_experiments_output_data (str): 实验输出数据子文件夹的名称。
 
         Returns:
-            folderpath_project (Path): 项目文件夹路径
-            folderpath_engine (Path): 引擎工具文件夹路径
-            folderpath_workstage (Path): 模型运作区域文件夹路径
-            folderpath_experiments_projects (Path): 实验项目所在文件夹路径
-            folderpath_system (Path): 系统文件夹路径
-            folderpath_config (Path): 实验配置项文件夹路径
-            folderpath_parameters (Path): 实验参数项文件夹路径
-            folderpath_models (Path): 智能模型文件夹路径
-            folderpath_settings (Path): 实验设置项文件夹路径
-            folderpath_world_conception_knowledge (Path): 世界概念知识模型文件夹路径
-            folderpath_world_environment (Path): 世界环境模型文件夹路径
-            folderpath_agents (Path): 实验实验个体众数据初始化设置项文件夹路径
-            folderpath_data (Path): 数据文件夹路径
-            folderpath_experiments_output (Path): 实验导出文件夹路径
-            folderpath_experiments_output_data (Path): 实验导出数据文件夹路径
-            folderpath_experiments_output_log (Path): 实验输出日志文件夹路径
-            folderpath_experiments_output_system (Path): 实验输出系统文件夹路径
-            folderpath_experiments_output_config (Path): 实验输出配置项设置文件夹路径
-            folderpath_experiments_output_parameters (Path): 实验输出参数项文件夹路径
-            folderpath_experiments_output_models (Path): 实验输出模型文件夹路径
-            folderpath_experiments_output_settings (Path): 实验输出设置项文件夹路径
-            folderpath_experiments_output_world_conception_knowledge (Path): 实验输出世界概念知识模型文件夹路径
-            folderpath_experiments_output_world_environment (Path): 实验输出世界环境模型文件夹路径
-            folderpath_experiments_output_agents (Path): 实验输出实验个体众数据初始化设置项文件夹路径
+            tuple: 包含所有生成的文件夹路径的元组，包括：
+                - 项目根目录路径
+                - 引擎文件夹路径
+                - 实验项目根目录路径
+                - 系统文件夹路径
+                - 配置项文件夹路径
+                - 模型文件夹路径
+                - 世界环境文件夹路径
+                - 输出数据文件夹路径
+                - 实验输出主文件夹路径
+                - 实验输出数据子文件夹路径
+                - 实验输出日志文件夹路径
+                - 实验输出系统文件夹路径
+                - 实验输出配置项文件夹路径
+                - 实验输出模型文件夹路径
+                - 实验输出世界环境文件夹路径
+
+        Raises:
+            FileNotFoundError: 如果某些必需的文件夹路径无法解析或不存在。
+            ValueError: 如果输入的路径参数无效或格式不正确。
         """
 
         # 设置项目文件夹路径
         folderpath_project = Tools._get_current_project_rootpath()
         # folderpath_engine = Tools.get_project_rootpath(str_foldername_engine, str_folderpath_relpath_engine)
         folderpath_engine = folderpath_project / str_folderpath_engine
-        folderpath_workstage = folderpath_project / str_folderpath_workstage
+        # folderpath_workstage = folderpath_project / str_folderpath_workstage
         folderpath_outputData = Tools.get_project_rootpath(str_foldername_outputData, str_folderpath_relpath_outputData)
 
         folderpath_experiments_projects = folderpath_project / str_folderpath_experiments_projects
@@ -289,40 +279,40 @@ class Tools:
         # folderpath_models = (folderpath_project / str_folderpath_relpath_CIS, str_folderpath_models).resolve()  # 设定模型文件夹
         folderpath_models = (folderpath_project / str_folderpath_models).resolve()  # 设定模型文件夹
         # folderpath_settings = (folderpath_project / str_folderpath_relpath_CIS, str_folderpath_settings).resolve()  # 设定实验设置项文件夹
-        folderpath_settings = (folderpath_project / str_folderpath_settings).resolve()  # 设定实验设置项文件夹
-        # folderpath_world_environment = (folderpath_project / str_folderpath_relpath_AWS, str_folderpath_world_environment).resolve()  # 设定模型文件夹
+        # folderpath_settings = (folderpath_project / str_folderpath_settings).resolve()  # 设定实验设置项文件夹
+        folderpath_world_environment = (folderpath_project / str_folderpath_relpath_AWS, str_folderpath_world_environment).resolve()  # 设定模型文件夹
         folderpath_world_environment = (folderpath_project / str_folderpath_world_environment).resolve()  # 设定模型文件夹
         # folderpath_agents = (folderpath_project / str_folderpath_relpath_AWS, str_folderpath_agents).resolve()  # 设定实验实验个体众数据初始化设置项文件夹
-        folderpath_agents = (folderpath_project / str_folderpath_agents).resolve()  # 设定实验实验个体众数据初始化设置项文件夹
+        # folderpath_agents = (folderpath_project / str_folderpath_agents).resolve()  # 设定实验实验个体众数据初始化设置项文件夹
         # folderpath_world_conception_knowledge = (folderpath_project / str_folderpath_relpath_ECS, str_folderpath_world_conception_knowledge).resolve()  # 设定模型文件夹
-        folderpath_world_conception_knowledge = (folderpath_project / str_folderpath_world_conception_knowledge).resolve()  # 设定模型文件夹
+        # folderpath_world_conception_knowledge = (folderpath_project / str_folderpath_world_conception_knowledge).resolve()  # 设定模型文件夹
         folderpath_data = (folderpath_project / str_folderpath_relpath_outputData / str_foldername_outputData).resolve()  # 设定输出数据文件夹
 
         return (
             folderpath_project,
             folderpath_engine,
-            folderpath_workstage,
+            # folderpath_workstage,
             folderpath_experiments_projects,
             folderpath_system,
             folderpath_config,
-            folderpath_parameters,
+            # folderpath_parameters,
             folderpath_models,
-            folderpath_settings,
-            folderpath_world_conception_knowledge,
+            # folderpath_settings,
+            # folderpath_world_conception_knowledge,
             folderpath_world_environment,
-            folderpath_agents,
+            # folderpath_agents,
             folderpath_data,
             folderpath_experiments_output,
             folderpath_experiments_output_data,
             folderpath_experiments_output_log,
             folderpath_experiments_output_system,
             folderpath_experiments_output_config,
-            folderpath_experiments_output_parameters,
+            # folderpath_experiments_output_parameters,
             folderpath_experiments_output_models,
-            folderpath_experiments_output_settings,
-            folderpath_experiments_output_world_conception_knowledge,
+            # folderpath_experiments_output_settings,
+            # folderpath_experiments_output_world_conception_knowledge,
             folderpath_experiments_output_world_environment,
-            folderpath_experiments_output_agents,
+            # folderpath_experiments_output_agents,
         )
 
         pass  # function

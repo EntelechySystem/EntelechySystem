@@ -8,11 +8,14 @@ config = dict(
     字符容量=2 ** 8,  # 数据类型：整数；配置类别：模型；备注：字符容量。默认 256。 ；
     用于解释的字符容量=2 ** 16,  # 数据类型：整数；配置类别：模型；备注：用于解释的字符容量。默认 65'536。 ；
     用于备注的字符容量=2 ** 16,  # 数据类型：整数；配置类别：模型；备注：用于备注的字符容量。默认 65'536。 ；
-    is_use_xlsx_as_config_file=True,  # 数据类型：布尔值；配置类别：配置；备注：是否使用 xlsx 表格文件作为各种配置的默认选项。默认 False 。如果是 True，则采用名为 `XXX_dict.py` 的文件作为各种配置的默认选项。其中 XXX 表示配置项、设置项等； ；
-    is_prerun_config_program=False,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行配置库相关的生成配置程序。默认 True。如果要用 False，那么不能用 Python 控制台运行，只能在终端用命令行运行。否则运行的时候不会继续推进。 ；
-    is_prerun_agents_program=True,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行个体众库相关的生成参数的程序。默认 True； ；
-    is_prerun_settings_program=True,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行设置库相关的生成参数的程序。默认 True； ；
-    is_prerun_parameters_program=True,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行参数库相关的生成参数的程序。默认 True； ；
+
+    # #HACK 计划移除
+    # is_use_xlsx_as_config_file=True,  # 数据类型：布尔值；配置类别：配置；备注：是否使用 xlsx 表格文件作为各种配置的默认选项。默认 False 。如果是 True，则采用名为 `XXX_dict.py` 的文件作为各种配置的默认选项。其中 XXX 表示配置项、设置项等； ；
+    # is_prerun_config_program=False,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行配置库相关的生成配置程序。默认 True。如果要用 False，那么不能用 Python 控制台运行，只能在终端用命令行运行。否则运行的时候不会继续推进。 ；
+    # is_prerun_agents_program=True,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行个体众库相关的生成参数的程序。默认 True； ；
+    # is_prerun_settings_program=True,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行设置库相关的生成参数的程序。默认 True； ；
+    # is_prerun_parameters_program=True,  # 数据类型：布尔值；配置类别：操作；备注：是否在实验主程序之前，预先运行参数库相关的生成参数的程序。默认 True； ；
+
     is_auto_confirmation=True,  # 数据类型：布尔值；配置类别：操作；备注：是否自动确认一些比较危险的操作例如删除、移动、复制文件等。默认 False； ；
     is_auto_open_outputlog=False,  # 数据类型：布尔值；配置类别：操作；备注：是否自动打开输出日志文件。默认 False； ；
     is_enable_multiprocessing=False,  # 数据类型：布尔值；配置类别：操作；备注：是否启用多进程并行。默认 True； ；
@@ -21,28 +24,39 @@ config = dict(
     高性能方案='自定义ECS方案',  # 数据类型：字符串；配置类别：初始化模型；备注：高性能方案。可选参数值为："稀疏矩阵方案", "自定义ECS方案", "顺序遍历单个Agent方案"。 ；
     is_ignore_warning=False,  # 数据类型：布尔值；配置类别：开发；备注：是否忽略警告。默认 False； ；
     test_logging=10,  # 数据类型：整数；配置类别：开发；备注：日志输出级别。调试级别是10，输出信息级别是20。具体见：[logging —— python的日志记录工具](https://docs.python.org/zh-cn/3.9/library/logging.html#levels) ；
-    下标开始=False,  # 数据类型：整数；配置类别：开发；备注：在所使用的编程语言中，下标开始计数的值。例如 Python 下标开始的计数是 0 ，Julia 下标开始的计数是 1 。默认 1 。 ；
+    下标开始=0,  # 数据类型：整数；配置类别：开发；备注：在所使用的编程语言中，下标开始计数的值。例如 Python 下标开始的计数是 0 ，Julia 下标开始的计数是 1 。默认 1 。 ；
     engine_version='v0.0.8_alpha',  # 数据类型：字符串；配置类别：配置；备注：引擎版本。 ；
     folderpath_experiments_projects='Experiments/CIS_010',  # 数据类型：路径字符串；配置类别：路径；备注：实验程序文件所在文件夹 ；
     # foldername_workstage='workstage',  # 数据类型：路径字符串；配置类别：路径；备注：模型运作区域文件夹名称 ；
     folderpath_workstage='workstage',  # 数据类型：路径字符串；配置类别：路径；备注：模型运作区域文件夹路径 ；
     # foldername_engine='engine',  # 数据类型：路径字符串；配置类别：路径；备注：模拟器所在工程文件夹名称 ；
     folderpath_engine='EntelechySystem_python/engine',  # 数据类型：路径字符串；配置类别：路径；备注：模拟器所在工程文件夹名称 ；
+
     # folderpath_relpath_engine='../',  # 数据类型：路径字符串；配置类别：路径；备注：模拟器所在工程文件夹相对本实验项目根路径文件夹之相对路径 ；  #HACK 2025-02-14：因为合并库内容，所以这个路径不再需要
+
     folderpath_system='EntelechySystem_python/Libraries/SystemsLibrary/system_test',  # 数据类型：路径字符串；配置类别：路径；备注：配置项设置所在的文件夹 ；
     folderpath_config='EntelechySystem_python/Libraries/ConfigsLibrary/config_test',  # 数据类型：路径字符串；配置类别：路径；备注：配置项设置所在的文件夹 ；
     folderpath_parameters='EntelechySystem_python/Libraries/ParametersLibrary/parameters_test',  # 数据类型：路径字符串；配置类别：路径；备注：参数设置所在的文件夹 ；
+
     # folderpath_relpath_CIS='../',  # 数据类型：路径字符串；配置类别：路径；备注：CIS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
+
     folderpath_models='EntelechySystem_python/Libraries/ModelsLibrary/model_111_numpy',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
     # folderpath_models='EntelechySystem_python/Libraries/ModelsLibrary/model_111_pytorch',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
     # folderpath_models='EntelechySystem_python/Libraries/ModelsLibrary/model_111_jax',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
+
     folderpath_settings='EntelechySystem_python/Libraries/SettingsLibrary/settings_test',  # 数据类型：路径字符串；配置类别：路径；备注：设置项所在的文件夹 ；
+
     # folderpath_relpath_ECS='../',  # 数据类型：路径字符串；配置类别：路径；备注：ECS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
+
     folderpath_world_conception_knowledge='EntelechySystem_python/Libararies/ConceptionLibrary/conception_test',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
-    # folderpath_relpath_AWS='../',  # 数据类型：路径字符串；配置类别：路径；备注：AWS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
+
+    folderpath_relpath_AWS='../',  # 数据类型：路径字符串；配置类别：路径；备注：AWS所在工程文件夹到本实验项目根路径文件夹之相对路径。除了非 Python、非 JS 的大型世界环境以外，大部分环境已经集成在该项目中；
+
     folderpath_world_environment='EntelechySystem_python/Libraries/WorldLibrary/Virtual2DMiniNurseryEnv',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
-    folderpath_agents='EntelechySystem_python/Libraries/AgentsLibrary/agents_test',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ；
+    # folderpath_agents='EntelechySystem_python/Libraries/AgentsLibrary/agents_test',  # 数据类型：路径字符串；配置类别：路径；备注：模型所在的文件夹 ； #HACK 似乎还不需要
+
     # folderpath_relpath_LMS='../',  # 数据类型：路径字符串；配置类别：路径；备注：LMS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
+
     foldername_outputData='EntelechyData',  # 数据类型：路径字符串；配置类别：路径；备注：输出数据所在工程文件夹名称 ；
     folderpath_relpath_outputData='../',  # 数据类型：路径字符串；配置类别：路径；备注：输出数据所在工程文件夹到本实验项目根路径文件夹之相对路径 ；
     folderpath_root_experiments='SimulationsData',  # 数据类型：路径字符串；配置类别：路径；备注：手动设置实验文件夹根路径； ；
@@ -52,11 +66,15 @@ config = dict(
     is_datetime=True,  # 数据类型：布尔值；配置类别：命名；备注：是否使用日期时间作为实验文件夹名称的一部分。默认 True； ；
     type_of_experiments_foldername='default',  # 数据类型：字符串；配置类别：命名；备注：设置实验文件夹命名方式。取值："default"、"set manually"。默认"default"； ；
     schedule_operation='ref_schedule_operation',  # 数据类型：引用；配置类别：运行；备注：调度需要运作的程序； ；
-    运行模式='交互式观察运行模式',  # 数据类型：字符串；配置类别：初始化模型；备注：运行模式。可选参数值为："批量实验作业运行模式", "交互式观察运行模式" ； ；
-    is_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：是否处于开发模型状态。默认 False。默认情况下，模拟器通在子进程独立启用相关的程序。启用之后，在模拟器中，将通过函数调用的方式调用各个程序。启用之后，适合在 Python 3.11 开始的版本做断点调试。 ；
-    # is_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：是否处于开发模型状态。默认 False。默认情况下，模拟器通在子进程独立启用相关的程序。启用之后，在模拟器中，将通过函数调用的方式调用各个程序。启用之后，适合在 Python 3.11 开始的版本做断点调试。 ；
-    # is_maintain_files_in_simulator_when_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
-    is_maintain_files_in_simulator_when_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
+
+    # 运行模式='交互式观察运行模式',  # 数据类型：字符串；配置类别：初始化模型；备注：运行模式。可选参数值为："批量实验作业运行模式", "交互式观察运行模式" ； ；
+    运行模式='继续上一次的实验',  # 数据类型：字符串；配置类别：初始化模型；备注：运行模式。可选参数值为："批量实验作业运行模式", "交互式观察运行模式" ； ；
+
+    # #HACK 计划移除
+    # is_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：是否处于开发模型状态。默认 False。默认情况下，模拟器通在子进程独立启用相关的程序。启用之后，在模拟器中，将通过函数调用的方式调用各个程序。启用之后，适合在 Python 3.11 开始的版本做断点调试。 ；
+    # # is_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：是否处于开发模型状态。默认 False。默认情况下，模拟器通在子进程独立启用相关的程序。启用之后，在模拟器中，将通过函数调用的方式调用各个程序。启用之后，适合在 Python 3.11 开始的版本做断点调试。 ；
+    # # is_maintain_files_in_simulator_when_develop_mode=True,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
+    # is_maintain_files_in_simulator_when_develop_mode=False,  # 数据类型：布尔值；配置类别：开发；备注：如果 is_develop_mode == True ，那么是否保留模拟器里的需要保留的文件？默认 False。运行的时候只会运行模拟器里的，而不会运行外部导入的文件，运行后也不会将其删除。如果你想直接运行模拟器里的需要保留的文件，并且做开发这些文件相关的工作，建议开启此项。 ；
 
     # #NOTE  预加载相关的实验和库文件程序
 
