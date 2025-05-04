@@ -12,8 +12,8 @@ plt.rcParams['font.family'] = font_prop.get_name()
 
 from EntelechySystem_python.engine.tools.Tools import Tools
 
-from Libraries.WorldLibrary.Virtual2DMiniNurseryEnv.world_environment import Scenario
-from Libraries.WorldLibrary.Virtual2DMiniNurseryEnv.world_environment import World
+from Libraries.WorldLibrary.Virtual2DMiniNurseryEnv_gym.world_environment import Scenario
+from Libraries.WorldLibrary.Virtual2DMiniNurseryEnv_gym.world_environment import World
 
 my_env = Scenario(
     render_mode='human',
