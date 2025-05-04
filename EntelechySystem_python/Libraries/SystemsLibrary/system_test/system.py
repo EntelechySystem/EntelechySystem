@@ -14,8 +14,8 @@ import logging
 # from AgentsWorldSystem_python.Libraries.WorldLibrary.中国象棋.world_environment import *
 # from AgentsWorldSystem_python.Libraries.WorldLibrary.烧水倒水.world_environment import *
 
-from workstage.models.model import Model
-from workstage.world_environment.world_environment import Scenario, World
+# from workstage.models.model import Model
+# from workstage.world_environment.world_environment import Scenario, World
 
 def system(gb: dict, para: dict = None):
     ## #NOW 导入智能体大脑模型

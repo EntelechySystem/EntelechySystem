@@ -48,7 +48,7 @@ config = dict(
 
     # folderpath_relpath_ECS='../',  # 数据类型：路径字符串；配置类别：路径；备注：ECS所在工程文件夹到本实验项目根路径文件夹之相对路径 ；  #HACK 2024-12-04：因为合并库内容，所以这个路径不再需要
 
-    folderpath_world_conception_knowledge='EntelechySystem_python/Libararies/ConceptionLibrary/conception_test',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；
+    folderpath_world_conception_knowledge='EntelechySystem_python/Libararies/ConceptionLibrary/conception_test',  # 数据类型：路径字符串；配置类别：路径；备注：世界环境文件夹路径 ；  #HACK 似乎还不需要
 
     folderpath_relpath_AWS='../',  # 数据类型：路径字符串；配置类别：路径；备注：AWS所在工程文件夹到本实验项目根路径文件夹之相对路径。除了非 Python、非 JS 的大型世界环境以外，大部分环境已经集成在该项目中；
 

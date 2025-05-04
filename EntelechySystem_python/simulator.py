@@ -213,6 +213,13 @@ def simulator(config: dict):
         # Tools.delete_and_recreate_folder(gb['folderpath_workstage'] / "config", is_auto_confirmation=config['is_auto_confirmation'])
         # Tools.copy_files_from_other_folders(gb['folderpath_config'], gb['folderpath_workstage'] / "config", is_auto_confirmation=gb['is_auto_confirmation'])
 
+        ## 导入智能模型（模型）
+        gb['system'] = Tools.import_modules_from_package(str_folderpath=gb['folderpath_system'], pattern='system', str_folderpath_project=gb['folderpath_project'])['system']
+        gb['model'] = Tools.import_modules_from_package(str_folderpath=gb['folderpath_models'], pattern='[Mm]odel', str_folderpath_project=gb['folderpath_project'])
+
+        # #FIXME 这里一导入就会直接运行到卡死
+        # gb['world_environment'] = Tools.import_modules_from_package(str_folderpath=gb['folderpath_world_environment'], pattern='world_environment', str_folderpath_project=gb['folderpath_project'])['world_environment']
+
         # # 导入智能模型（模型）
         # if (gb['is_develop_mode'] and not gb['is_maintain_files_in_simulator_when_develop_mode']):
         #     # 导入相关设置项

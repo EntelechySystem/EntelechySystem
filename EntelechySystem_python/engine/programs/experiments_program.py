@@ -190,6 +190,8 @@ def main(gb):
 
     gb['simulator_start_time'] = timeit.default_timer()  # 记录系统开始运行时刻
 
+    system=gb['system']  # 获取当前实验对应的系统。如果一次批处理只有一个系统，那么就用这个。
+
     system(gb=gb)
 
     gb['simulator_end_time'] = timeit.default_timer()  # 记录系统结束运行时刻
