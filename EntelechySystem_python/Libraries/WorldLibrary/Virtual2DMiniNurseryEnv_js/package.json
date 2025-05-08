@@ -1,0 +1,21 @@
+{
+  "name": "virtual-2d-mini-nursery-env",
+  "version": "0.0.1",
+  "description": "虚拟2D迷你育儿室环境 Virtual 2D Mini Nursery Env 。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.2",
+  "dependencies": {
+    "bitecs": "^0.3.40",
+    "p5": "^2.0.1",
+    "phaser": "^3.88.2"
+  },
+  "devDependencies": {
+    "@types/p5": "^1.7.6"
+  }
+}
