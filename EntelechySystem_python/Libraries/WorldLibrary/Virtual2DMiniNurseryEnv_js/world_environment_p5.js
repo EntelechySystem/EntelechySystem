@@ -34,22 +34,27 @@ let observationSpaces = {
     hunger: {range: [0, 1]}, // 饥饿程度范围
 };
 
+let mapRadius = 150; // 地图半径
+let mapCenter; // 地图中心点
+
 /**
  * p5.js的setup函数，用于初始化画布和代理、地标对象
  */
 function setup() {
     createCanvas(320, 320); // 创建320x320的画布
+    mapCenter = createVector(width / 2, height / 2); // 设置地图中心点
 
     // 初始化地标
     for (let i = 0; i < 3; i++) {
         landmarks.push({
-            position: createVector(random(width), random(height)), // 地标的位置向量
+            position: generateRandomPositionInCircle(), // 在圆形地图内生成地标位置
         });
     }
+
     // 初始化代理
     for (let i = 0; i < 3; i++) {
         agents.push({
-            position: createVector(random(width), random(height)), // 代理的位置向量
+            position: generateRandomPositionInCircle(), // 在圆形地图内生成代理位置
             velocity: createVector(random(-1, 1), random(-1, 1)), // 代理的速度向量
             actionState: {
                 speaking: 0, // 说话状态
@@ -73,8 +78,19 @@ function setup() {
             },
         });
     }
+}
 
-
+/**
+ * 在圆形地图内生成随机位置
+ * @returns {p5.Vector} - 随机位置向量
+ */
+function generateRandomPositionInCircle() {
+    let angle = random(TWO_PI); // 随机角度
+    let radius = random(mapRadius); // 随机半径
+    return createVector(
+        mapCenter.x + cos(angle) * radius,
+        mapCenter.y + sin(angle) * radius
+    );
 }
 
 /**
@@ -107,11 +123,15 @@ function stepEnvironment(agent, action) {
     agent.velocity = action.movement;
     agent.position.add(agent.velocity);
 
-    // 边界处理：代理超出画布时从另一侧出现
-    if (agent.position.x > width) agent.position.x = 0;
-    if (agent.position.x < 0) agent.position.x = width;
-    if (agent.position.y > height) agent.position.y = 0;
-    if (agent.position.y < 0) agent.position.y = height;
+    // 限制代理在圆形地图内
+    let distanceFromCenter = dist(agent.position.x, agent.position.y, mapCenter.x, mapCenter.y);
+    if (distanceFromCenter > mapRadius) {
+        // 停止代理的运动
+        agent.velocity.set(0, 0);
+        // 将代理位置调整到边界上
+        let direction = p5.Vector.sub(agent.position, mapCenter).normalize();
+        agent.position = p5.Vector.add(mapCenter, direction.mult(mapRadius));
+    }
 }
 
 let decisionInterval = 30; // 决策间隔时间（帧数）
@@ -123,9 +143,20 @@ let frameCounter = 0; // 帧计数器
 function draw() {
     background(240); // 设置背景颜色为浅灰色
 
+    // 绘制地图边界（圆形）
+    noFill();
+    stroke(0);
+    ellipse(mapCenter.x, mapCenter.y, mapRadius * 2, mapRadius * 2);
+
     frameCounter++; // 增加帧计数器
 
-    // 更新并绘制代理
+    // 绘制地标（最底层）
+    for (let landmark of landmarks) {
+        fill(231, 76, 60); // 设置地标颜色为红色
+        ellipse(landmark.position.x, landmark.position.y, 15, 15); // 绘制地标为圆形
+    }
+
+    // 更新并绘制代理（覆盖在地标之上）
     for (let agent of agents) {
         // 每隔指定帧数才决策一次动作
         if (frameCounter % decisionInterval === 0) {
@@ -138,12 +169,6 @@ function draw() {
         // 绘制代理
         fill(52, 152, 219); // 设置代理颜色为蓝色
         ellipse(agent.position.x, agent.position.y, 20, 20); // 绘制代理为圆形
-    }
-
-    // 绘制地标
-    for (let landmark of landmarks) {
-        fill(231, 76, 60); // 设置地标颜色为红色
-        ellipse(landmark.position.x, landmark.position.y, 15, 15); // 绘制地标为圆形
     }
 }
 
