@@ -37,48 +37,6 @@ let observationSpaces = {
 let mapRadius = 150; // 地图半径
 let mapCenter; // 地图中心点
 
-/**
- * p5.js的setup函数，用于初始化画布和代理、地标对象
- */
-function setup() {
-    createCanvas(320, 320); // 创建320x320的画布
-    mapCenter = createVector(width / 2, height / 2); // 设置地图中心点
-
-    // 初始化地标
-    for (let i = 0; i < 3; i++) {
-        landmarks.push({
-            position: generateRandomPositionInCircle(), // 在圆形地图内生成地标位置
-        });
-    }
-
-    // 初始化代理
-    for (let i = 0; i < 3; i++) {
-        agents.push({
-            position: generateRandomPositionInCircle(), // 在圆形地图内生成代理位置
-            velocity: createVector(random(-1, 1), random(-1, 1)), // 代理的速度向量
-            actionState: {
-                speaking: 0, // 说话状态
-                movement: createVector(0, 0), // 移动状态
-                emotion: 0, // 情绪状态
-                grabbing: 0, // 抓取状态
-                sleeping: 0, // 睡眠状态
-                eating: 0, // 进食状态
-            },
-            observationState: {
-                vision: [], // 视觉信息
-                hearing: [], // 听觉信息
-                emotion: 0, // 情绪状态
-                touch: 0, // 触觉状态
-                smell: 0, // 嗅觉状态
-                temperature: 0.5, // 温度感知
-                speaking: 0, // 说话状态
-                grabbing: 0, // 抓取状态
-                sleepiness: 0, // 困倦程度
-                hunger: 0, // 饥饿程度
-            },
-        });
-    }
-}
 
 /**
  * 在圆形地图内生成随机位置
@@ -137,6 +95,51 @@ function stepEnvironment(agent, action) {
 let decisionInterval = 30; // 决策间隔时间（帧数）
 let frameCounter = 0; // 帧计数器
 
+
+/**
+ * p5.js的setup函数，用于初始化画布和代理、地标对象
+ */
+function setup() {
+    let canvas=createCanvas(480, 480); // 创建320x320的画布
+    canvas.parent('sketch-holder'); // 将画布添加到HTML元素中
+    mapCenter = createVector(width / 2, height / 2); // 设置地图中心点
+
+    // 初始化地标
+    for (let i = 0; i < 3; i++) {
+        landmarks.push({
+            position: generateRandomPositionInCircle(), // 在圆形地图内生成地标位置
+        });
+    }
+
+    // 初始化代理
+    for (let i = 0; i < 3; i++) {
+        agents.push({
+            position: generateRandomPositionInCircle(), // 在圆形地图内生成代理位置
+            velocity: createVector(random(-1, 1), random(-1, 1)), // 代理的速度向量
+            actionState: {
+                speaking: 0, // 说话状态
+                movement: createVector(0, 0), // 移动状态
+                emotion: 0, // 情绪状态
+                grabbing: 0, // 抓取状态
+                sleeping: 0, // 睡眠状态
+                eating: 0, // 进食状态
+            },
+            observationState: {
+                vision: [], // 视觉信息
+                hearing: [], // 听觉信息
+                emotion: 0, // 情绪状态
+                touch: 0, // 触觉状态
+                smell: 0, // 嗅觉状态
+                temperature: 0.5, // 温度感知
+                speaking: 0, // 说话状态
+                grabbing: 0, // 抓取状态
+                sleepiness: 0, // 困倦程度
+                hunger: 0, // 饥饿程度
+            },
+        });
+    }
+}
+
 /**
  * p5.js的draw函数，用于绘制代理和地标，并更新代理的位置
  */
@@ -148,9 +151,11 @@ function draw() {
     fill(255); // 设置填充颜色为白色
     stroke(0);
     strokeWeight(2);
-    circle(mapCenter.x, mapCenter.y, (mapRadius + 08) * 2);
+    circle(mapCenter.x, mapCenter.y, (mapRadius + 10) * 2);
 
     frameCounter++; // 增加帧计数器
+
+    strokeWeight(1);
 
     // 绘制地标（最底层）
     for (let landmark of landmarks) {
