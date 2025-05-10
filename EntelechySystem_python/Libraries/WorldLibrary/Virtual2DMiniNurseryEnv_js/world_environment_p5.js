@@ -144,9 +144,11 @@ function draw() {
     background(240); // 设置背景颜色为浅灰色
 
     // 绘制地图边界（圆形）
-    noFill();
+    // noFill();
+    fill(255); // 设置填充颜色为白色
     stroke(0);
-    ellipse(mapCenter.x, mapCenter.y, mapRadius * 2, mapRadius * 2);
+    strokeWeight(2);
+    circle(mapCenter.x, mapCenter.y, (mapRadius + 08) * 2);
 
     frameCounter++; // 增加帧计数器
 
