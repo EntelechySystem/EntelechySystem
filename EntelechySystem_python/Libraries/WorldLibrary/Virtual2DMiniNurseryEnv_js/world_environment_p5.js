@@ -97,11 +97,61 @@ let frameCounter = 0; // 帧计数器
 
 
 /**
+ * 更新日志输出框，限制最大行数
+ * @param {string} message - 要追加的日志信息
+ * @param {number} maxLines - 最大行数
+ */
+function updateLogOutput(message, maxLines = 100) {
+    const logOutput = document.getElementById('log-output');
+    const lines = logOutput.value.split('\n'); // 将日志内容按行分割
+
+    // 追加新日志
+    lines.push(message);
+
+    // 如果行数超过限制，删除最早的行
+    if (lines.length > maxLines) {
+        lines.splice(0, lines.length - maxLines);
+    }
+
+    // 更新日志内容并滚动到最新内容
+    logOutput.value = lines.join('\n');
+    logOutput.scrollTop = logOutput.scrollHeight;
+}
+
+/**
+ * 执行动作并更新环境
+ * @param {Object} agent - 代理对象
+ * @param {Object} action - 决策的动作
+ */
+function stepEnvironment(agent, action) {
+    // 更新代理的动作状态
+    agent.actionState = action;
+
+    // 根据动作更新代理的位置
+    agent.velocity = action.movement;
+    agent.position.add(agent.velocity);
+
+    // 限制代理在圆形地图内
+    let distanceFromCenter = dist(agent.position.x, agent.position.y, mapCenter.x, mapCenter.y);
+    if (distanceFromCenter > mapRadius) {
+        // 停止代理的运动
+        agent.velocity.set(0, 0);
+        // 将代理位置调整到边界上
+        let direction = p5.Vector.sub(agent.position, mapCenter).normalize();
+        agent.position = p5.Vector.add(mapCenter, direction.mult(mapRadius));
+    }
+
+    // 打印 observationState 和 actionState 到日志输出框
+    updateLogOutput(`ObservationState: ${JSON.stringify(agent.observationState)}`);
+    updateLogOutput(`ActionState: ${JSON.stringify(agent.actionState)}`);
+}
+
+/**
  * p5.js的setup函数，用于初始化画布和代理、地标对象
  */
 function setup() {
-    let canvas=createCanvas(480, 480); // 创建320x320的画布
-    canvas.parent('sketch-holder'); // 将画布添加到HTML元素中
+    let canvas=createCanvas(480, 480); // 创建画布
+    canvas.parent('env-stage'); // 将画布添加到HTML元素中
     mapCenter = createVector(width / 2, height / 2); // 设置地图中心点
 
     // 初始化地标

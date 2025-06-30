@@ -1,0 +1,49 @@
+html, body {
+    margin: 0; /* 去除默认的外边距 */
+    padding: 0; /* 去除默认的内边距 */
+    width: 100%; /* 设置宽度为一个百分比 */
+    height: 100%; /* 设置高度为一个百分比 */
+    display: flex; /* 使用弹性布局 */
+    flex-direction: column; /* 设置主轴方向为列 */
+    background-color: #f0f0f0; /* 设置背景颜色 */
+}
+
+.container {
+    display: flex; /* 使用弹性布局 */
+    flex: 1; /* 设置容器占据剩余空间 */
+}
+
+.sidebar {
+    width: 300px; /* 设置固定宽度 */
+    background-color: #ffffff; /* 设置背景颜色 */
+    border-right: 1px solid #ccc; /* 设置右侧边框 */
+    padding: 20px; /* 设置内边距 */
+    overflow-y: auto; /* 设置垂直方向的内容溢出为滚动 */
+}
+
+#env-stage {
+    width: 720px; /* 设置固定宽度 */
+    height: 720px; /* 设置固定高度 */
+    display: flex; /* 使用弹性布局 */
+    justify-content: center; /* 设置主轴方向上的内容居中 */
+    align-items: center; /* 设置交叉轴方向上的内容居中 */
+    background-color: #e0e0e0; /* 设置背景颜色 */
+    overflow: auto; /* 设置内容溢出时显示滚动条 */
+    margin: auto; /* 设置外边距为自动以居中 */
+    border: 1px solid #ccc; /* 添加边框以模拟窗口效果 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影以增强窗口效果 */
+}
+
+.back-button {
+    margin: 10px; /* 设置外边距 */
+    padding: 5px 10px; /* 设置内边距 */
+    background-color: #007bff; /* 设置背景颜色 */
+    color: white; /* 设置文字颜色 */
+    text-decoration: none; /* 去除文字装饰 */
+    border-radius: 5px; /* 设置圆角边框 */
+    align-self: flex-start; /* 设置自身在交叉轴方向上的对齐方式 */
+}
+
+.back-button:hover {
+    background-color: #0056b3; /* 设置鼠标悬停时的背景颜色 */
+}
