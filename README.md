@@ -35,7 +35,42 @@
 
 # 使用方法
 
-TODO 待续
+## 快速开始
+
+1. 准备环境：Python 版本需要 `>=3.12`。
+
+2. 安装依赖（Windows PowerShell）：
+
+```powershell
+python -m venv .venv
+.\\.venv\\Scripts\\Activate.ps1
+python -m pip install -U pip
+pip install -r requirements.txt
+```
+
+3. 运行一个示例实验：
+
+```powershell
+python EntelechySystem_python\\Experiments\\EXP_test_010.py
+```
+
+该实验脚本会调用模拟器入口 `EntelechySystem_python/simulator.py` 中的 `simulator(config)`。
+
+4. 修改配置：
+
+示例实验默认读取配置目录：
+- `EntelechySystem_python/Libraries/ConfigsLibrary/config_test`
+
+仓库也提供工作区配置目录（常用于运行态配置）：
+- `workstage/config/`
+
+## 文档
+
+- 文档索引：见 [docs/README.md](docs/README.md)
+- 开发者指南：见 [docs/开发者指南.md](docs/开发者指南.md)
+- 用户手册：见 [docs/用户手册.md](docs/用户手册.md)
+- 开发日志：见 [docs/开发日志.md](docs/开发日志.md)
+- 需求文档：见 [docs/需求文档.md](docs/需求文档.md)
 
 
 
