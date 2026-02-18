@@ -3,10 +3,6 @@
 
 *.ffs_db
 
-draft/*
-*.pkl
-*.xlsx
-workstage/*
 
 
 
@@ -1373,3 +1369,13 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,python,julia,r,matlab,visualstudiocode,visualstudio,pycharm,obsidian,latex,lyx,sublimetext,octave,spark,stata,jupyternotebooks
 
 
+
+
+# -------- 自定义 --------
+draft/*
+*.pkl
+*.xlsx
+workstage/*
+
+!/docs/**
+!/.github
