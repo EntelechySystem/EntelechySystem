@@ -6,7 +6,11 @@ import logging
 import numpy as np
 import uuid
 import base64
-import torch
+
+try:
+    import torch
+except ModuleNotFoundError:
+    torch = None
 
 
 class EncodeDecodeTools:
@@ -57,7 +61,9 @@ class EncodeDecodeTools:
             ascii_values = ord(s[:max_len])
             encoded_array[i] = ascii_values
 
-        # 转换为 PyTorch tensor
+        # 转换为 PyTorch tensor；若未安装 PyTorch，则回退为 NumPy 数组。
+        if torch is None:
+            return encoded_array
         return torch.tensor(encoded_array, dtype=torch.uint32)
         pass  # function
 
@@ -114,6 +120,8 @@ class EncodeDecodeTools:
         fixed_length_array = np.zeros(max_len, dtype=np.uint32)
         # 将字节数组复制到定长数组中
         fixed_length_array[:len(byte_array)] = byte_array
+        if torch is None:
+            return fixed_length_array
         return torch.from_numpy(fixed_length_array)
         pass  # function
 
@@ -136,7 +144,10 @@ class EncodeDecodeTools:
 
         """
         # 将 PyTorch 数组转换为 numpy 数组
-        byte_array = array.numpy().astype(np.uint8)
+        if hasattr(array, 'numpy'):
+            byte_array = array.numpy().astype(np.uint8)
+        else:
+            byte_array = np.asarray(array, dtype=np.uint8)
         # 找到第一个 0 的位置，表示字符串结束
         end_index = np.where(byte_array == 0)[0]
         if len(end_index) > 0:
