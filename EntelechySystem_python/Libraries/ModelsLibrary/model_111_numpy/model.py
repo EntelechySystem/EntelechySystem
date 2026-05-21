@@ -6,7 +6,10 @@ import logging
 import numpy as np
 # from model_define import NeuralNetUnit, NeuralNetUnit_ForHumanRead, OperationUnits
 # from EntelechySystem_python.engine.libraries.models.model_define import ModelDefine
-from engine.tools.encode_decode_tools import EncodeDecodeTools
+try:
+    from engine.tools.encode_decode_tools import EncodeDecodeTools
+except ModuleNotFoundError:
+    from EntelechySystem_python.engine.tools.encode_decode_tools import EncodeDecodeTools
 from .model_define import ModelDefine
 from .model_settings import ModelSettings
 
@@ -35,7 +38,7 @@ class Model:
 
     pass  # class
 
-    def init_model(self, gb):
+    def init_model(self, gb: dict) -> None:
 
         ## 初始化单元众
 
@@ -130,12 +133,8 @@ class Model:
         # 选取 64 个控制单元做为总控制中心（一级控制中心）。这些控制单元之间相互连接，形成一个全连接网络。
         N_units_controlCenter = 8  # 一级控制中心之控制单元数量
         ids_point = 0  # 用于记录当前要开始选取的 ID 偏移值
-        ids_from = np.arange(N_units_controlCenter)
-        ids_to = ids_from.copy()
-        ids_level1Center = ids_from.copy()
-        # indices = np.vstack((ids_from, ids_to))
-        # values = np.ones(N_units_controlCenter)
-        self.op_units_Control.links_id[np.ix_(ids_from, ids_to)] = 1
+        ids_level1Center = np.arange(ids_point, ids_point + N_units_controlCenter, dtype=np.int64)
+        self.op_units_Control.connect_cartesian(ids_level1Center, ids_level1Center, include_self=True)
         ids_point += N_units_controlCenter
 
         # 分级控制中心
@@ -144,61 +143,44 @@ class Model:
         # 再选取 64 个控制单元做为2级控制中心。这些控制单元之间相互连接，形成一个全连接网络。二级控制中心
         N_controlUnits_level2Center = 4
         N_level2Center = 4
-        for i in range(N_level2Center):
+        for level2_idx in range(N_level2Center):
 
             # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
-            ids_from = np.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level2Center)
-            ids_level2Center = ids_from.copy()
-            ids_to = np.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level2Center)
-
-            # indices = np.vstack((ids_from, ids_to))
-            # values = np.ones(N_controlUnits_level2Center)
-            self.op_units_Control.links_id[np.ix_(ids_from, ids_to)] = 1
-            # 自己与自己不连接
-            for i in range(N_controlUnits_level2Center):
-                self.op_units_Control.links_id[ids_from[i], ids_to[i]] = 0
+            ids_level2Center = np.arange(ids_point, ids_point + N_controlUnits_level2Center, dtype=np.int64)
+            self.op_units_Control.connect_cartesian(ids_level2Center, ids_level2Center, include_self=False)
 
             # 同一级的控制中心之间暂时不连接，但是与上级控制中心连接
-            ids_from = ids_level2Center[0]
-            ids_to = ids_level1Center[i]
-            self.op_units_Control.links_id[ids_from, ids_to] = 1
+            self.op_units_Control.connect_pairs(
+                np.asarray([ids_level2Center[0]], dtype=np.int64),
+                np.asarray([ids_level1Center[level2_idx]], dtype=np.int64),
+            )
             ids_point += N_controlUnits_level2Center
 
             # 三级控制中心
             # 再选取 64 个控制单元做为3级控制中心。这些控制单元之间相互连接，形成一个全连接网络。
             N_controlUnits_level3Center = 4
             N_level3Center = 4
-            for i in range(N_level3Center):
+            for level3_idx in range(N_level3Center):
 
                 # 同一个控制中心内部的控制单元之间相互连接，形成一个全连接网络。
-                ids_from = np.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level3Center)
-                ids_level3Center = ids_from.copy()
-                ids_to = np.arange(N_units_controlCenter, N_units_controlCenter + N_controlUnits_level3Center)
-
-                # indices = np.vstack((ids_from, ids_to))
-                # values = np.ones(N_controlUnits_level3Center)
-                self.op_units_Control.links_id[np.ix_(ids_from, ids_to)] = 1
-                # 自己与自己不连接
-                for i in range(N_controlUnits_level3Center):
-                    self.op_units_Control.links_id[ids_from[i], ids_to[i]] = 0
+                ids_level3Center = np.arange(ids_point, ids_point + N_controlUnits_level3Center, dtype=np.int64)
+                self.op_units_Control.connect_cartesian(ids_level3Center, ids_level3Center, include_self=False)
 
                 # 同一级的控制中心之间暂时不连接，但是与上级控制中心连接
-                ids_from = ids_level3Center[0]
-                ids_to = ids_level1Center[i]
-                self.op_units_Control.links_id[ids_from, ids_to] = 1
+                self.op_units_Control.connect_pairs(
+                    np.asarray([ids_level3Center[0]], dtype=np.int64),
+                    np.asarray([ids_level2Center[level3_idx % ids_level2Center.size]], dtype=np.int64),
+                )
                 ids_point += N_controlUnits_level3Center
 
                 # #NOW 每一个三级控制中心之每一个控制单元都连接一个概念单元
-                ids_from = ids_level3Center
-                # 查询概念单元的 ID
+                control_src_uids = self.op_units_Control.gid[ids_level3Center].astype(np.int64, copy=False)
+                conception_dst_uids = self.op_units_Conception.gid.astype(np.int64, copy=False)
 
-                gids_to = self.op_units_Conception.gid[self.op_units_Conception.gid]
-                for j in range(0, len(gids_to), len(ids_from)):
-                    gids_to_part = gids_to[j:j + len(ids_from)]
-                    if len(gids_to_part) < len(ids_from):
-                        ids_from = ids_from[:len(gids_to_part)]
-                    self.op_units_Control.links_id[ids_from, gids_to_part] = 1
-                self.op_units_Control.links_id[ids_from, gids_to] = 1
+                if conception_dst_uids.size > 0:
+                    src_expand = np.repeat(control_src_uids, conception_dst_uids.size)
+                    dst_expand = np.tile(conception_dst_uids, control_src_uids.size)
+                    self.op_units_Control.connect_uid_pairs(src_expand, dst_expand)
         pass  # function
 
     def model_content(self, gb: dict):

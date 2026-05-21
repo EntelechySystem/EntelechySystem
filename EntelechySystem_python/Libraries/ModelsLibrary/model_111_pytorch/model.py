@@ -5,7 +5,7 @@
 import logging
 # from model_define import NeuralNetUnit, NeuralNetUnit_ForHumanRead, OperationUnits
 # from EntelechySystem_python.engine.libraries.models.model_define import ModelDefine
-from engine.tools.encode_decode_tools import EncodeDecodeTools
+from ....engine.tools.encode_decode_tools import EncodeDecodeTools
 from .model_define import ModelDefine
 from .model_settings import ModelSettings
 
