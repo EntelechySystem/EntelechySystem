@@ -697,6 +697,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# uv 环境迁移备份
+old_requirements.txt
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -1379,3 +1382,10 @@ workstage/*
 
 !/docs/**
 !/.github
+
+# mailbox/relay — 运行时状态与归档（不入库）
+.mailbox/
+docs/mailbox/relay/archive/
+
+# CodeBuddy 运行时数据（本地索引，不入库）
+.codebuddy/
