@@ -8,6 +8,8 @@
 > v0.0.8_alpha
 >
 > 该版本起于2022年06月07日，于岳麓山下桃子湖畔。至今仍在发展中。
+>
+> Python 工具包名称（distribution）：**`entelechy`**（见 `pyproject.toml` 的 `name` 字段）；源码包目录为 `EntelechySystem/`。
 
 # 简介
 
@@ -35,34 +37,43 @@
 
 # 使用方法
 
-## 快速开始
+## 快速开始（推荐：uv）
 
-1. 准备环境：Python 版本需要 `>=3.12`。
+1. 准备环境：安装 [uv](https://docs.astral.sh/uv/)（Python 版本管理 + 环境管理）。
 
-2. 安装依赖（Windows PowerShell）：
+2. 一键迁移/重建环境（首次或环境漂移时）：
 
-```powershell
-python -m venv .venv
-.\\.venv\\Scripts\\Activate.ps1
-python -m pip install -U pip
-pip install -r requirements.txt
+```bash
+bash scripts/uv_migrate.sh
 ```
+
+该脚本会：备份旧环境快照 → 彻底清理 `.venv` 与 `uv.lock` → 用 Python 3.14 重建 → 验证导入。国内网络缓慢时可加 `--mirror` 参数启用清华镜像。
 
 3. 运行一个示例实验：
 
-```powershell
-python EntelechySystem_python\\Experiments\\EXP_test_010.py
+```bash
+uv run python EntelechySystem/Experiments/EXP_test_010.py
 ```
 
-该实验脚本会调用模拟器入口 `EntelechySystem_python/simulator.py` 中的 `simulator(config)`。
+该实验脚本会调用模拟器入口 `EntelechySystem/simulator.py` 中的 `simulator(config)`。
 
 4. 修改配置：
 
 示例实验默认读取配置目录：
-- `EntelechySystem_python/Libraries/ConfigsLibrary/config_test`
+- `EntelechySystem/Libraries/ConfigsLibrary/config_test`
 
 仓库也提供工作区配置目录（常用于运行态配置）：
 - `workstage/config/`
+
+## 手动安装（不使用脚本）
+
+```bash
+uv python pin 3.14
+uv sync          # 自动安装 pyproject.toml 依赖（含 RECS / scene-kit 本地可编辑依赖）
+uv run python EntelechySystem/Experiments/EXP_test_010.py
+```
+
+> 需要启用 PyTorch 模型时：`uv sync --extra torch`（无 torch 时模型自动退化为 NumPy 实现）。
 
 ## 文档
 
@@ -146,7 +157,6 @@ python EntelechySystem_python\\Experiments\\EXP_test_010.py
 - 借鉴和吸收各类论坛、交流群、学会的交流成果。特别鸣谢：
   - 集智俱乐部；
   - 中国通用人工智能协会官方QQ群；
-
 
 
 
