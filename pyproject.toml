@@ -1,23 +1,21 @@
 [project]
-name = "entelechysystem"
+name = "entelechy"
 version = "0.0.8_alpha"
-description = "Add your description here"
-requires-python = ">=3.12"
+description = "生机系统（Entelechy System, ES）—— 面向通用人工智能探索的多子系统工程"
+requires-python = ">=3.14"
 dependencies = [
     "chardet>=5.2.0",
-    "gymnasium>=1.2.0",
-    "jupyter>=1.1.1",
-    "jupyterlab>=4.4.4",
-    "matplotlib>=3.10.3",
     "numpy>=2.3.1",
     "openpyxl>=3.1.5",
     "pandas>=2.3.0",
-    "pandas-stubs~=2.3.0",
-    "pettingzoo>=1.25.0",
-    "pip>=25.1.1",
-    "pygame>=2.6.1",
-    "scipy>=1.16.0",
-    "torch>=2.7.1",
-    "torchaudio>=2.7.1",
-    "torchvision>=0.22.1",
+    "relation-entity-component-system-kit>=0.2.0",
+    "scene-kit>=0.2.0",
 ]
+
+[project.optional-dependencies]
+# torch 在 model_define.py 中为可选回退（无 torch 时自动退化为 NumPy 数组）
+torch = ["torch>=2.7.1"]
+
+[tool.uv.sources]
+relation-entity-component-system-kit = { path = "../relation-entity-component-system", editable = true }
+scene-kit = { path = "../scene-kit", editable = true }
