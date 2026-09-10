@@ -7,7 +7,7 @@
 - 项目名称：`EntelechySystem (ES)`。
 - 目标方向：通用人工智能相关的多子系统探索与工程实现。
 - 主要代码目录：
-  - `EntelechySystem_python/`：Python 主体代码。
+  - `EntelechySystem/`：Python 主体代码（源码包根，导入路径 `EntelechySystem.*`）。ES 顶层只用 Python 单一语言栈，**不使用语言后缀目录**。
   - `workstage/`：运行阶段相关的配置、模型与环境数据。
   - `attachment/`、`draft/`、`library/`：资料与草稿内容，默认不随意改动。
 
